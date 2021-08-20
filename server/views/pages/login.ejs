@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Login - RomlandTube</title>
+	<!--CDN IMPORT OF Crypto-JS used for the hashing and salting of password-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+
+	<script src="/js/hash.js" type="module"></script>
+	<script src="/js/login.js" type="module" defer></script>
+</head>
+
+<body>
+	<section class="cover">
+		<div class="container text-center">
+			<div class="col-md-12">
+				<section class="container-fluid">
+					<section class="row justify-content-center">
+						<section class="col-12 col-sm-6 col-md-3">
+							<form id="theForm" class="form-container text-left">
+								<div class="form-group">
+									<h4 class="text-center font-weight-bold">Login</h4>
+									<label for="username">Username</label>
+									<input class="form-control" type="text" placeholder="Username" class="fadeIn second"
+										id="username" name="username" />
+								</div>
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input class="form-control" type="password" placeholder="Password" class="fadeIn third"
+										id="password" name="password" />
+								</div>
+								<p id="errorText"></p>
+								<button type="submit" class="btn btn-primary btn-block">
+									Login
+								</button>
+								<div class="form-footer">
+									<p>Don't have an account? <a href="/register">Register</a></p>
+								</div>
+							</form>
+						</section>
+					</section>
+				</section>
+			</div>
+		</div>
+	</section>
+	
+</body>
+
+</html>
