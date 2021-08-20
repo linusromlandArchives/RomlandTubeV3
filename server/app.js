@@ -84,6 +84,8 @@ app.post(
 //adds the loginroutes to /
 app.use("/", require("./routes/loginRoutes"));
 
+//Adds VueJS build
+app.use("/", express.static(__dirname + "/dist"));
 
 app.listen(port, () => {
   console.log(
