@@ -1,6 +1,14 @@
-# RomlandTube
+<p align="center">
+  <a href="https://github.com/linusromland/RomlandTube">
+    <img alt="RomlandTube" title="RomlandTube" src="https://raw.githubusercontent.com/linusromland/RomlandTube/master/client/src/assets/black.png" width="450">
+  </a>
+</p>
 
-This is the third version of RomlandTube. Now using VueJS Framework
+<p align="center">
+  RomlandTube Version 3. Now with VueJS Framework
+</p>
+
+
 
 ## Contact
 
