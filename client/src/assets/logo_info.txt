@@ -1,0 +1,3 @@
+Fonts used: Montserrat-Regular,Lato-Italic 
+Colors used: BDD3EF,107CF1  
+        
