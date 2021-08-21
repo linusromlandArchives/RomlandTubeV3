@@ -72,7 +72,7 @@ module.exports = (function () {
     });
   });
 
-  router.get("/logout", login.checkAuthenticated, (req, res) => {
+  router.get("/signout", login.checkAuthenticated, (req, res) => {
     //removes your session token and logs you out.
     req.logOut();
     res.redirect("/");
