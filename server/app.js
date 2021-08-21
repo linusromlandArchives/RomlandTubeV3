@@ -11,6 +11,7 @@ const flash = require("express-flash");
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
 const fileUpload = require("express-fileupload");
+const history = require('connect-history-api-fallback');
 
 //Local Dependencies
 const database = require("./database.js");
@@ -29,6 +30,7 @@ database.connect("RomlandTube", mongoURL);
 
 //Sets the view engine to EJS
 app.use(cors());
+app.use(history());
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/shared/"));
 app.use(flash());
