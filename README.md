@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/linusromland/RomlandTube">
-    <img alt="RomlandTube" title="RomlandTube" src="https://raw.githubusercontent.com/linusromland/RomlandTube/master/client/src/assets/logo_transparent.png" width="450">
+    <img alt="RomlandTube" title="RomlandTube" src="https://raw.githubusercontent.com/linusromland/RomlandTube/master/server/assets/logo_transparent.png" width="450">
   </a>
 </p>
 
