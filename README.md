@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  RomlandTube Version 3. Now with VueJS Framework
+  RomlandTube. Now with VueJS Framework
 </p>
 
 
