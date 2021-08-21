@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/linusromland/RomlandTube#readme",
   "dependencies": {
+    "connect-history-api-fallback": "^1.6.0",
     "connect-mongo": "^4.5.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
