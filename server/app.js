@@ -89,6 +89,10 @@ app.use("/api", require("./routes/apiRoutes"));
 //Adds VueJS build
 app.use("/", express.static(__dirname + "/dist"));
 
+//Adds VueJS build
+app.use("/assets", express.static(__dirname + "/assets"));
+
+
 app.listen(port, () => {
   console.log(
     `\nApp running at:\n- Local: \x1b[36mhttp://localhost:${port}/\x1b[0m\n- Network \x1b[36mhttp://${ip.address()}:${port}/\x1b[0m\n\nTo run for production, run \x1b[36mnpm run start\x1b[0m\n`
