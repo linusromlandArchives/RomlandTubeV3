@@ -42,7 +42,7 @@ module.exports = (function () {
   router.get("/auth", login.checkAuthenticated, async (req, res, next) => {
     let user = await req.user;
     if (user.verfied) {
-      res.redirect("/upload");
+      res.redirect("/");
     } else {
       res.render("pages/verifyEmail", {
         user: user,
@@ -76,10 +76,6 @@ module.exports = (function () {
     //removes your session token and logs you out.
     req.logOut();
     res.redirect("/");
-  });
-
-  router.get("/getUser", login.checkAuthenticated, async (req, res) => {
-	  res.json(req.user);
   });
 
   return router;
