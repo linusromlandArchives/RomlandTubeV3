@@ -12,11 +12,11 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item v-bind:href="loginRoute">Log In</b-nav-item>
+          <b-nav-item href="/login">Log In</b-nav-item>
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <em>{{ username }}</em>
+              <em>Username</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#">Sign Out</b-dropdown-item>
@@ -31,12 +31,11 @@ export default {
   name: "Navbar",
   data: function() {
     return {
-      loginRoute: "",
+      data: {},
     };
   },
   created() {
-    loginRoute = process.env.API_ROUTE + "/login";
-    fetch(process.env.API_ROUTE + "getUser")
+    fetch("/api/getUser")
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
