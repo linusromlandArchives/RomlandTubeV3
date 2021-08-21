@@ -31,11 +31,10 @@ database.connect("RomlandTube", mongoURL);
 //Sets the view engine to EJS
 app.use(cors());
 app.use(history());
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/shared/"));
 app.use(flash());
-app.use(express.static("client"));
+app.use(express.static(__dirname + "/shared/"));
 app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
 
 //init of passport
 app.use(
@@ -83,7 +82,7 @@ app.post(
 );
 
 //adds the loginroutes to /
-app.use("/", require("./routes/loginRoutes"));
+app.use("/login", require("./routes/loginRoutes"));
 
 //adds the apiRoutes to /
 app.use("/api", require("./routes/apiRoutes"));
