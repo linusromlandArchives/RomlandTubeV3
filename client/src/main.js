@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
-import Profile from "./Profile.vue";
+import App from "./App.vue";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -11,5 +11,5 @@ Vue.use(IconsPlugin);
 Vue.config.productionTip = false;
 
 new Vue({
-  render: (h) => h(Profile),
+  render: (h) => h(App),
 }).$mount("#app");
