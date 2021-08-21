@@ -1,5 +1,5 @@
-import Home from "./pages/Home.vue";
-import Profile from "./pages/Profile.vue";
+import Home from "./views/Home.vue";
+import Profile from "./views/Profile.vue";
 
 export default [
     {
