@@ -41,7 +41,6 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         this.data = json;
-        console.log(this.data);
       });
   },
 };
