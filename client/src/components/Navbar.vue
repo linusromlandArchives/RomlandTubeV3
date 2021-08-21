@@ -1,7 +1,9 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">RomlandTube</b-navbar-brand>
+      <b-navbar-brand href="/">
+      <img src="assets/logo_transparent.png" height="45px" class="d-inline-block align-top" alt="RomlandTube Logo">
+    </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -28,6 +30,7 @@
     </b-navbar>
   </div>
 </template>
+
 <script>
 export default {
   name: "Navbar",
@@ -45,3 +48,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.bg-info {
+  background-color: #107CF1 !important;
+}
+</style>
