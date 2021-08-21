@@ -6,7 +6,6 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-
         <!-- Left aligned nav items -->
         <b-navbar-nav>
           <b-nav-item href="#">Link</b-nav-item>
@@ -17,9 +16,10 @@
           <b-nav-item-dropdown right v-if="data">
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <em>{{ data.name }}</em>
+              Signed in as: <em>{{ data.name }}</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">Upload</b-dropdown-item>
             <b-dropdown-item href="/signout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item href="/login" v-else>Log In</b-nav-item>
