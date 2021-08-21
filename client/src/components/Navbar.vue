@@ -10,7 +10,6 @@
       <b-collapse id="nav-collapse" is-nav>
         <!-- Left aligned nav items -->
         <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -24,7 +23,7 @@
             <b-dropdown-item href="#">Upload</b-dropdown-item>
             <b-dropdown-item href="/signout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item href="/login" v-else>Log In</b-nav-item>
+          <b-nav-item href="/login" v-else>Login</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
