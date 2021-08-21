@@ -11,6 +11,7 @@ const flash = require("express-flash");
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
 const fileUpload = require("express-fileupload");
+const history = require("connect-history-api-fallback");
 
 //Local Dependencies
 const database = require("./database.js");
@@ -29,11 +30,10 @@ database.connect("RomlandTube", mongoURL);
 
 //Sets the view engine to EJS
 app.use(cors());
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/shared/"));
 app.use(flash());
-app.use(express.static("client"));
+app.use(express.static(__dirname + "/shared/"));
 app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
 
 //init of passport
 app.use(
@@ -91,7 +91,6 @@ app.use("/", express.static(__dirname + "/dist"));
 
 //Adds VueJS build
 app.use("/assets", express.static(__dirname + "/assets"));
-
 
 app.listen(port, () => {
   console.log(
