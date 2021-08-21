@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="/">
+      <b-navbar-brand href="#/">
       <img src="assets/logo_transparent.png" height="45px" class="d-inline-block align-top" alt="RomlandTube Logo">
     </b-navbar-brand>
 
@@ -19,7 +19,7 @@
             <template #button-content>
               Signed in as: <em>{{ data.name }}</em>
             </template>
-            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item href="#/profile">Profile</b-dropdown-item>
             <b-dropdown-item href="#">Upload</b-dropdown-item>
             <b-dropdown-item href="/signout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
