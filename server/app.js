@@ -37,48 +37,47 @@ app.use(express.urlencoded({ extended: true }));
 
 //init of passport
 app.use(
-	session({
-		secret: process.env.SECRET || "keyboard cat",
-		store: MongoStore.create({
-			mongoUrl: mongoURL,
-			dbName: "RomlandTube",
-		}),
-		resave: true,
-		saveUninitialized: true,
-	})
+  session({
+    secret: process.env.SECRET || "keyboard cat",
+    store: MongoStore.create({
+      mongoUrl: mongoURL,
+      dbName: "RomlandTube",
+    }),
+    resave: true,
+    saveUninitialized: true,
+  })
 );
 app.use(passport.initialize(undefined));
 app.use(passport.session(undefined));
 
 //init of passport
 initializePassport(
-	passport,
-	(name) => User.find((user) => user.name === name),
-	(id) => User.find((user) => user.id === id)
+  passport,
+  (name) => User.find((user) => user.name === name),
+  (id) => User.find((user) => user.id === id)
 );
-
 
 //init of express-fileupload
 app.use(
-	fileUpload({
-		limits: { fileSize: fileSizeLimitMB }, //limit of 50mb i think
-		abortOnLimit: true, //send 413 when file to large
-		useTempFiles: true, //stores files while uploading in ./tmp instead of memory
-		tempFileDir: "./tmp/",
-		uploadTimeout: 0, //disable timeout while testing
-		debug: false, //debug logs
-	})
+  fileUpload({
+    limits: { fileSize: fileSizeLimitMB }, //limit of 50mb i think
+    abortOnLimit: true, //send 413 when file to large
+    useTempFiles: true, //stores files while uploading in ./tmp instead of memory
+    tempFileDir: "./tmp/",
+    uploadTimeout: 0, //disable timeout while testing
+    debug: false, //debug logs
+  })
 );
 
 //Login Post Request (Needs passport)
 app.post(
-	"/login",
-	checkAuthenticated.checkNotAuthenticated,
-	passport.authenticate("local", {
-		successRedirect: "/",
-		failureRedirect: "/login",
-		failureFlash: true,
-	})
+  "/login",
+  checkAuthenticated.checkNotAuthenticated,
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
 );
 
 //adds the loginroutes to /
