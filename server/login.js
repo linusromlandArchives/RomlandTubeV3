@@ -1,6 +1,6 @@
 //Dependencies import
 const mongoose = require("mongoose");
-const ObjectID = require("mongodb").ObjectID;
+const ObjectID = require('mongodb').ObjectId;
 
 //Local Dependencies
 const User = require("./models/User.js");
