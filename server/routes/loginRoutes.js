@@ -51,18 +51,6 @@ module.exports = (function () {
     }
   });
 
-  router.get("/register", login.checkNotAuthenticated, (req, res) => {
-    res.render("pages/register", {
-      loggedIn: false,
-    });
-  });
-
-  router.get("/login", login.checkNotAuthenticated, (req, res) => {
-    res.render("pages/login", {
-      loggedIn: false,
-    });
-  });
-
   router.get("/verifyAccount", async (req, res) => {
     //updates bool on db to verified
     login.verifyUser(User, req.query.user);
