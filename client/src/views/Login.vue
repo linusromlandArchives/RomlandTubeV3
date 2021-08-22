@@ -1,7 +1,7 @@
 <template>
   <main class="d-flex align-items-center justify-content-center flex-column">
-    <a href="/" class="w-25 mx-auto">
-      <img src="assets/logo-white_transparent.png" alt="RomlandTube Logo" />
+    <a href="/" class="col-12 col-sm-6 col-md-3 mx-auto">
+      <img src="assets/logo-white_transparent.png" width="100%" alt="RomlandTube Logo" />
     </a>
     <div class="container col-md-4 col-sm-8 p-3">
       <b-form @submit="onSubmit" class="element w-75 m-auto text-center">
@@ -103,5 +103,8 @@ main {
 .container {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 25px;
+}
+.col-12, .col-sm-6, .col-md-3 {
+  flex: 0 0 0 !important;
 }
 </style>
