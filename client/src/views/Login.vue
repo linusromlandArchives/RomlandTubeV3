@@ -4,7 +4,7 @@
       <img src="assets/logo-white_transparent.png" alt="RomlandTube Logo" />
     </a>
     <div class="container col-md-4 col-sm-8 p-3">
-      <b-form class="element w-75 m-auto text-center">
+      <b-form @submit="onSubmit" class="element w-75 m-auto text-center">
         <h1 class="mb-3 text-light">Login</h1>
         <b-form-input
           id="username"
@@ -20,12 +20,12 @@
         ></b-form-input>
         <p class="mb-0 text-light">
           Don't have an account?
-          <a class="text-light" href="/"><u>Register</u></a>
+          <a class="text-light"  href="/"><u>Register</u></a>
         </p>
         <p>
           <a class="text-light" href="/"><u>Forgot password?</u></a>
         </p>
-        <b-button class="m-2 w-50 x-rounded" id="loginBtn">Login</b-button>
+        <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn">Login</b-button>
       </b-form>
     </div>
   </main>
@@ -35,6 +35,12 @@
 export default {
   name: "Login",
   components: {},
+  methods: {
+    onSubmit(event) {
+      event.preventDefault();
+      alert("login");
+    },
+  },
 };
 </script>
 
