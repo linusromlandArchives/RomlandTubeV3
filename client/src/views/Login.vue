@@ -10,22 +10,25 @@
           id="username"
           class="my-2 text-center x-rounded"
           placeholder="Username"
+          v-model="username"
         ></b-form-input>
 
         <b-form-input
           id="password"
+          v-model="password"
           class="my-2 text-center x-rounded"
           placeholder="Password"
           type="password"
         ></b-form-input>
         <p class="mb-0 text-light">
           Don't have an account?
-          <a class="text-light"  href="/"><u>Register</u></a>
+          <a class="text-light" href="/"><u>Register</u></a>
         </p>
         <p>
           <a class="text-light" href="/"><u>Forgot password?</u></a>
         </p>
-        <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn">Login</b-button>
+        <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn"
+          >Login</b-button>
       </b-form>
     </div>
   </main>
@@ -35,10 +38,39 @@
 export default {
   name: "Login",
   components: {},
+  data () {
+    return {
+      username: "",
+      password: "",
+    };
+  },
   methods: {
     onSubmit(event) {
+      console.log(this.username.value, this.password.value);
       event.preventDefault();
-      alert("login");
+      let request = new XMLHttpRequest();
+      //hash the password with salting
+      let pass = this.CryptoJS.MD5(this.password.value + this.username.value);
+      request.open("POST", "/login", true);
+      request.setRequestHeader(
+        "Content-type",
+        "application/x-www-form-urlencoded"
+      );
+      //sends request to to server
+      request.send(`name=${this.username.value}&password=${pass}`);
+      console.log(pass)
+      request.onreadystatechange = function() {
+        // This is ugly and I want to change it
+        let urlToLogin =
+          window.location.protocol + "//" + window.location.host + "/login";
+        if (request.responseURL == urlToLogin) {
+          console.log("error")
+          // errorArea.innerText = "Username or Password is incorrect";
+        } else {
+          console.log("success")
+          window.location = "/auth";
+        }
+      };
     },
   },
 };
