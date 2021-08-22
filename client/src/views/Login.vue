@@ -20,6 +20,7 @@
           placeholder="Password"
           type="password"
         ></b-form-input>
+        <p id="errorArea" class="text-danger"><br /></p>
         <p class="mb-0 text-light">
           Don't have an account?
           <a class="text-light" href="/"><u>Register</u></a>
@@ -28,7 +29,8 @@
           <a class="text-light" href="/"><u>Forgot password?</u></a>
         </p>
         <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn"
-          >Login</b-button>
+          >Login</b-button
+        >
       </b-form>
     </div>
   </main>
@@ -38,7 +40,7 @@
 export default {
   name: "Login",
   components: {},
-  data () {
+  data() {
     return {
       username: "",
       password: "",
@@ -58,16 +60,17 @@ export default {
       );
       //sends request to to server
       request.send(`name=${this.username}&password=${pass}`);
-      console.log(pass)
+      console.log(pass);
       request.onreadystatechange = function() {
         // This is ugly and I want to change it
         let urlToLogin =
           window.location.protocol + "//" + window.location.host + "/login";
         if (request.responseURL == urlToLogin) {
-          console.log("error")
-          // errorArea.innerText = "Username or Password is incorrect";
+          console.log("error");
+          document.getElementById("errorArea").innerText =
+            "Username or Password is incorrect";
         } else {
-          console.log("success")
+          console.log("success");
           window.location = "/auth";
         }
       };
