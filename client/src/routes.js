@@ -2,6 +2,7 @@ import Home from "./views/Home.vue";
 import Profile from "./views/Profile.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
+import ForgotPassword from "./views/ForgotPassword.vue";
 
 export default [
     {
@@ -19,5 +20,9 @@ export default [
       {
         path: "/register", 
         component: Register
+      },
+      {
+        path: "/forgotpassword", 
+        component: ForgotPassword
       }
 ]
