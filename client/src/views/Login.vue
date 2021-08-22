@@ -46,18 +46,18 @@ export default {
   },
   methods: {
     onSubmit(event) {
-      console.log(this.username.value, this.password.value);
+      console.log(this.username, this.password);
       event.preventDefault();
       let request = new XMLHttpRequest();
       //hash the password with salting
-      let pass = this.CryptoJS.MD5(this.password.value + this.username.value);
+      let pass = this.CryptoJS.MD5(this.password + this.username);
       request.open("POST", "/login", true);
       request.setRequestHeader(
         "Content-type",
         "application/x-www-form-urlencoded"
       );
       //sends request to to server
-      request.send(`name=${this.username.value}&password=${pass}`);
+      request.send(`name=${this.username}&password=${pass}`);
       console.log(pass)
       request.onreadystatechange = function() {
         // This is ugly and I want to change it
