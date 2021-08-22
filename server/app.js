@@ -31,7 +31,6 @@ database.connect("RomlandTube", mongoURL);
 //Sets the view engine to EJS
 app.use(cors());
 app.use(flash());
-app.use(express.static(__dirname + "/shared/"));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
