@@ -79,10 +79,13 @@ app.post(
 );
 
 //adds the loginroutes to /
-app.use("/", require("./routes/loginRoutes"));
+app.use("/api/login/", require("./routes/loginRoutes"));
 
 //adds the apiRoutes to /
 app.use("/api", require("./routes/apiRoutes"));
+
+//Configure Express for Vue History Mode
+app.use(history())
 
 //Adds VueJS build
 app.use("/", express.static(__dirname + "/dist"));

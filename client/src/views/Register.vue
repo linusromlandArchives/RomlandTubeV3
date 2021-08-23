@@ -45,7 +45,7 @@
         <p id="errorArea" class="text-danger"><br /></p>
         <p class="mb-0 text-light">
           Already have an account?
-          <a class="text-light" href="/#/login"><u>Login</u></a>
+          <a class="text-light" href="/login"><u>Login</u></a>
         </p>
 
         <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn"
@@ -101,7 +101,7 @@ export default {
       let name = username;
       //hash the password with salting
       let pass = this.CryptoJS.MD5(password + name);
-      request.open("POST", "/register", true);
+      request.open("POST", "/api/login/register", true);
       request.setRequestHeader(
         "Content-type",
         "application/x-www-form-urlencoded"
@@ -117,7 +117,7 @@ export default {
         } else if (request.status == 500) {
           errorBox.innerText = "Error occured!";
         } else if (request.status == 201) {
-          window.location = "/#/login";
+          window.location = "/login";
           return;
         } else {
           errorBox.innerText = "Unknown error";
@@ -130,7 +130,7 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/#/verifyemail";
+        if(!json.verfied) window.location = "/verifyemail";
       });
   },
 };

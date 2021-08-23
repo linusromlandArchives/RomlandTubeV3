@@ -48,6 +48,12 @@ module.exports = (function () {
     }
   });
 
+  router.get("/verifyAccount", async (req, res) => {
+    //updates bool on db to verified
+    login.verifyUser(User, req.query.user);
+    res.redirect("/verifiedaccount")
+  });
+
   router.get("/signout", login.checkAuthenticated, (req, res) => {
     //removes your session token and logs you out.
     req.logOut();

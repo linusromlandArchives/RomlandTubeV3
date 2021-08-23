@@ -23,10 +23,10 @@
         <p id="errorArea" class="text-danger"><br /></p>
         <p class="mb-0 text-light">
           Don't have an account?
-          <a class="text-light" href="/#/register"><u>Register</u></a>
+          <a class="text-light" href="/register"><u>Register</u></a>
         </p>
         <p>
-          <a class="text-light" href="/"><u>Forgot password?</u></a>
+          <a class="text-light" href="/forgotpassword"><u>Forgot password?</u></a>
         </p>
         <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn"
           >Login</b-button
@@ -71,7 +71,7 @@ export default {
             "Username or Password is incorrect";
         } else {
           console.log("success");
-          window.location = "/auth";
+          window.location = "/api/login/auth";
         }
       };
     },
@@ -81,7 +81,7 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/#/verifyemail";
+        if(!json.verfied) window.location = "/verifyemail";
       });
   },
 };
