@@ -6,6 +6,8 @@ module.exports = (function () {
   //Local Dependencies
   const login = require("../login.js");
   const User = require("../models/User.js");
+  const forgotpassword = require("../forgotpassword")
+  const database = require("../database")
 
   router.post("/register", login.checkNotAuthenticated, async (req, res) => {
     try {
@@ -62,8 +64,9 @@ module.exports = (function () {
 
   router.post("/forgotPassword", function (req, res) {
     let email = req.body.email;
-    console.log(email);
     res.setHeader('Content-Type', 'text/plain');
+    let forgotPasswordModel = forgotpassword.createForgotPassword(email)
+    database.saveToDB(forgotPasswordModel)
     res.send().status(200);
   });
 
