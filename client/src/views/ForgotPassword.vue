@@ -45,7 +45,7 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/#/verifyAccount";
+        if(!json.verfied) window.location = "/verifyAccount";
       });
   },
 };

@@ -38,7 +38,7 @@ export default {
     fetch("/api/getUser")
       .then(async (response) => {
         console.log(response);
-        if(response.redirected) window.location = "/#/login"
+        if(response.redirected) window.location = "/login"
         this.data = await response.json();
         console.log(this.data.email)
         if (this.data.verfied) window.location = "/";

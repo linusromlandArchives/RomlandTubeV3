@@ -19,8 +19,8 @@ export default {
     fetch("/api/getUser")
       .then((response) => response.json())
       .then((json) => {
-        if (!json) window.location = "/#/login";
-        if(!json.verfied) window.location = "/#/verifyemail";
+        if (!json) window.location = "/login";
+        if(!json.verfied) window.location = "/verifyemail";
       });
   },
 };

@@ -44,7 +44,7 @@ module.exports = (function () {
     if (user.verfied) {
       res.redirect("/");
     } else {
-      res.redirect("/#/verifyemail")
+      res.redirect("/verifyemail")
     }
   });
 
