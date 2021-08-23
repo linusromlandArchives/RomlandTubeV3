@@ -40,6 +40,14 @@ export default {
       event.preventDefault();
     },
   },
+  mounted() {
+    fetch("/api/getUser")
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.verfied) window.location = "/";
+        if(!json.verfied) window.location = "/verifyAccount";
+      });
+  },
 };
 </script>
 

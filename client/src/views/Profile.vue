@@ -15,6 +15,14 @@ export default {
     Navbar,
     Footer,
   },
+  created() {
+    fetch("/api/getUser")
+      .then((response) => response.json())
+      .then((json) => {
+        if (!json) window.location = "/#/login";
+        if(!json.verfied) window.location = "/#/verifyAccount";
+      });
+  },
 };
 </script>
 
