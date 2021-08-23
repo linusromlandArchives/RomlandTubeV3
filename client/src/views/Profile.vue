@@ -20,7 +20,7 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (!json) window.location = "/#/login";
-        if(!json.verfied) window.location = "/#/verifyAccount";
+        if(!json.verfied) window.location = "/#/verifyemail";
       });
   },
 };

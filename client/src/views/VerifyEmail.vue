@@ -11,8 +11,12 @@
       <div
         class="element w-75 h-100 m-auto text-center d-flex align-items-center justify-content-center flex-column"
       >
-        <h1 class="mb-3 text-light">Verified Account</h1>
-        <p class="mb-3 text-light">Your account is now verified!</p>
+        <h1 class="mb-3 text-light">Welcome {{ data.name }}!</h1>
+        <p class="mb-3 text-light">
+          You need to activate your account before you can use your account!<br />An email
+          have been sent to <i>{{ data.email }}</i>.<br />Please click the link in the
+          email to verify!
+        </p>
         <p class="mb-3 text-light">
           Click <a class="mb-3 text-light" href="/"><u>me</u></a> to go home!
         </p>
@@ -23,14 +27,21 @@
 
 <script>
 export default {
-  name: "VerifiedAccount",
+  name: "VerifyEmail",
   components: {},
+  data() {
+    return {
+      data: "",
+    };
+  },
   created() {
     fetch("/api/getUser")
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/#/verifyemail";
+      .then(async (response) => {
+        console.log(response);
+        if(response.redirected) window.location = "/#/login"
+        this.data = await response.json();
+        console.log(this.data.email)
+        if (this.data.verfied) window.location = "/";
       });
   },
 };

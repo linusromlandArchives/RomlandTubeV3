@@ -23,7 +23,7 @@
         <p id="errorArea" class="text-danger"><br /></p>
         <p class="mb-0 text-light">
           Don't have an account?
-          <a class="text-light" href="/"><u>Register</u></a>
+          <a class="text-light" href="/#/register"><u>Register</u></a>
         </p>
         <p>
           <a class="text-light" href="/"><u>Forgot password?</u></a>
@@ -81,7 +81,7 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/verifyAccount";
+        if(!json.verfied) window.location = "/#/verifyemail";
       });
   },
 };

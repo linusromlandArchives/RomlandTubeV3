@@ -45,7 +45,7 @@
         <p id="errorArea" class="text-danger"><br /></p>
         <p class="mb-0 text-light">
           Already have an account?
-          <a class="text-light" href="/"><u>Login</u></a>
+          <a class="text-light" href="/#/login"><u>Login</u></a>
         </p>
 
         <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn"
@@ -130,7 +130,7 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/verifyAccount";
+        if(!json.verfied) window.location = "/#/verifyemail";
       });
   },
 };

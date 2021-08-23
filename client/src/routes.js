@@ -5,6 +5,7 @@ import Register from "./views/Register.vue";
 import ForgotPassword from "./views/ForgotPassword.vue";
 import Video from "./views/Video.vue";
 import VerifiedAccount from "./views/VerifiedAccount.vue";
+import VerifyEmail from "./views/VerifyEmail.vue";
 
 export default [
     {
@@ -30,6 +31,10 @@ export default [
       {
         path: "/verifiedaccount", 
         component: VerifiedAccount
+      },
+      {
+        path: "/verifyemail", 
+        component: VerifyEmail
       },
       {
         path: "/video", 

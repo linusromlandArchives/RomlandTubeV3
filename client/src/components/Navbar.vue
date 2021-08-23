@@ -23,7 +23,7 @@
             <b-dropdown-item href="#">Upload</b-dropdown-item>
             <b-dropdown-item href="/signout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item href="/login" v-else>Login</b-nav-item>
+          <b-nav-item href="#/login" v-else>Login</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
