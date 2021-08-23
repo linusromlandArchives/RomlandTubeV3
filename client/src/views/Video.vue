@@ -24,18 +24,31 @@
                     </div>
                     <div class="video-info my-3">
                         <p>21 aug. 2021</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo praesentium hic doloribus quisquam aperiam, laboriosam saepe iste atque maxime ut eius consequuntur ipsum perspiciatis cum provident a nostrum eum officiis!</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo praesentium hic doloribus
+                            quisquam aperiam, laboriosam saepe iste atque maxime ut eius consequuntur ipsum perspiciatis
+                            cum provident a nostrum eum officiis!</p>
                     </div>
                 </div>
                 <div id="comment-section">
 
                 </div>
             </div>
+
             <div class="d-block d-sm-none col-12"></div>
 
             <div class="col-12 col-md-3 bg-info pt-3">
                 <div class="bg-dark">
-                    Sidebar med andra videor
+                    <div class="row pl-3">
+                        <!-- Related video template -->
+                        <div class="media w-25 bg-danger"></div>
+                        <div class="related-info w-75 py-1">
+                            <p class="related-title m-0 col-12 text-cap"
+                                title="The Tesla Model S Plaid Is the World’s Fastest (and Coolest) Sedan">The Tesla
+                                Model S Plaid Is the World’s Fastest (and Coolest) Sedan</p>
+                            <a class="related-channel m-0 col-12 text-muted" href="">Channel</a>
+                            <p class="related-views m-0 col-12 text-muted">Views</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,13 +72,35 @@
     .media {
         aspect-ratio: 16 / 9;
     }
+
     .video-info {
         font-size: 0.9em;
     }
+
     #username {
         font-size: 0.9em;
     }
+
     #subs {
         font-size: 0.7em;
+    }
+
+    .related-info {
+        margin-left: -0.5em;
+    }
+
+    .related-title {
+        font-size: 1em;
+    }
+
+    .related-channel,
+    .related-views {
+        font-size: 0.8em;
+    }
+
+    .text-cap {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 </style>
