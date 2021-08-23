@@ -1,19 +1,17 @@
 const mongoose = require("mongoose");
 
 //Creates the ForgotPasswordSchema and exports it
-const ForgotPasswordSchema = new mongoose.Schema(
-  {
-    email: {
-      type: String,
-      required: true,
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
+const ForgotPasswordSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
   },
-  { createdAt: { type: Date, expires: 3600 } }
-);
+  createAt: {
+    type: Date,
+    default: Date.now(),
+    index: { expires: 60 * 60 * 2 },
+  },
+});
 
 const ForgotPassword = mongoose.model("ForgotPassword", ForgotPasswordSchema);
 

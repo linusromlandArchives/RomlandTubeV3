@@ -9,21 +9,28 @@
     </a>
     <div class="container col-md-4 col-sm-8 p-3">
       <b-form @submit="onSubmit" class="element w-75 m-auto text-center">
-        <h1 class="mb-3 text-light">Forgot Password</h1>
+        <h1 class="mb-3 text-light">Reset Password</h1>
         <p class="text-light">
-          Enter the email linked to your account and we will send you a link to
-          reset your password.
+          Type your new password below to change it to the account linked to the
+          email.
         </p>
         <b-form-input
-          id="email"
+          id="password"
           class="my-2 text-center x-rounded"
-          placeholder="Email"
-          type="email"
-          v-model="email"
+          placeholder="New Password"
+          type="password"
+          v-model="password"
+        ></b-form-input>
+        <b-form-input
+          id="confirmPassword"
+          class="my-2 text-center x-rounded"
+          placeholder="Confirm New Password"
+          type="password"
+          v-model="confirmPassword"
         ></b-form-input>
         <p class="text-warning" id="infoText"></p>
         <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn"
-          >Submit</b-button
+          >Change Password</b-button
         >
       </b-form>
     </div>
@@ -32,11 +39,12 @@
 
 <script>
 export default {
-  name: "ForgotPassword",
+  name: "ResetPassword",
   components: {},
   data() {
     return {
-      email: "",
+      password: "",
+      confirmPassword: "",
     };
   },
   methods: {
@@ -66,6 +74,20 @@ export default {
         if (json.verfied) window.location = "/";
         if (!json.verfied) window.location = "/verifyAccount";
       });
+    let request = new XMLHttpRequest();
+    request.open("POST", "/api/login/getForgotInfo", true);
+    request.setRequestHeader(
+      "Content-type",
+      "application/x-www-form-urlencoded"
+    );
+    //sends request to to server
+    request.send(`id=${this.$route.query.id}`);
+    //on return recives status codes
+    request.onreadystatechange = function() {
+      if (request.status == 500) {
+        window.location = "/login";
+      }
+    };
   },
 };
 </script>

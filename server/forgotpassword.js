@@ -1,6 +1,6 @@
 //Dependencies import
 const mongoose = require("mongoose");
-const ObjectID = require('mongodb').ObjectId;
+const ObjectID = require("mongodb").ObjectId;
 
 //Local Dependencies
 const ForgotPassword = require("./models/ForgotPassword.js");
@@ -12,3 +12,7 @@ exports.createForgotPassword = (emailIN) => {
   });
 };
 
+//Creates user from Model & inputs
+exports.getForgotPassword = (id) => {
+  return ForgotPassword.find({ _id: ObjectID(id) });
+};

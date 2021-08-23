@@ -6,6 +6,7 @@ import ForgotPassword from "./views/ForgotPassword.vue";
 import Video from "./views/Video.vue";
 import VerifiedAccount from "./views/VerifiedAccount.vue";
 import VerifyEmail from "./views/VerifyEmail.vue";
+import ResetPassword from "./views/ResetPassword.vue";
 
 export default [
     {
@@ -27,6 +28,10 @@ export default [
       {
         path: "/forgotpassword", 
         component: ForgotPassword
+      },
+      {
+        path: "/resetPassword", 
+        component: ResetPassword
       },
       {
         path: "/verifiedaccount", 
