@@ -44,20 +44,8 @@ module.exports = (function () {
     if (user.verfied) {
       res.redirect("/");
     } else {
-      res.render("pages/verifyEmail", {
-        user: user,
-        loggedIn: req.user,
-      });
+      res.redirect("/#/verifyemail")
     }
-  });
-
-  router.get("/verifyAccount", async (req, res) => {
-    //updates bool on db to verified
-    login.verifyUser(User, req.query.user);
-    res.render("pages/verified", {
-      user: await login.findUserWithID(User, req.query.user),
-      loggedIn: req.user,
-    });
   });
 
   router.get("/signout", login.checkAuthenticated, (req, res) => {

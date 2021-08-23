@@ -32,7 +32,6 @@ database.connect("RomlandTube", mongoURL);
 app.use(cors());
 app.use(flash());
 app.use(express.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
 
 //init of passport
 app.use(
