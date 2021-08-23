@@ -4,6 +4,7 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import ForgotPassword from "./views/ForgotPassword.vue";
 import Video from "./views/Video.vue";
+import VerifiedAccount from "./views/VerifiedAccount.vue";
 
 export default [
     {
@@ -25,6 +26,10 @@ export default [
       {
         path: "/forgotpassword", 
         component: ForgotPassword
+      },
+      {
+        path: "/verifiedaccount", 
+        component: VerifiedAccount
       },
       {
         path: "/video", 
