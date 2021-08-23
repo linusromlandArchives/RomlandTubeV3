@@ -36,8 +36,19 @@ export default {
   },
   methods: {
     onSubmit(event) {
-      console.log(this.email);
       event.preventDefault();
+      let request = new XMLHttpRequest();
+      request.open("POST", "/api/login/forgotPassword", true);
+      request.setRequestHeader(
+        "Content-type",
+        "application/x-www-form-urlencoded"
+      );
+      //sends request to to server
+      request.send(`email=${this.email}`);
+      //on return recives status codes
+      request.onreadystatechange = function() {
+          console.log("coolt bre")
+      };
     },
   },
   mounted() {

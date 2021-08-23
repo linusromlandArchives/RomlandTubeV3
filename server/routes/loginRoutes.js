@@ -44,20 +44,27 @@ module.exports = (function () {
     if (user.verfied) {
       res.redirect("/");
     } else {
-      res.redirect("/verifyemail")
+      res.redirect("/verifyemail");
     }
   });
 
   router.get("/verifyAccount", async (req, res) => {
     //updates bool on db to verified
     login.verifyUser(User, req.query.user);
-    res.redirect("/verifiedaccount")
+    res.redirect("/verifiedaccount");
   });
 
   router.get("/signout", login.checkAuthenticated, (req, res) => {
     //removes your session token and logs you out.
     req.logOut();
     res.redirect("/");
+  });
+
+  router.post("/forgotPassword", function (req, res) {
+    let email = req.body.email;
+    console.log(email);
+    res.setHeader('Content-Type', 'text/plain');
+    res.send().status(200);
   });
 
   return router;
