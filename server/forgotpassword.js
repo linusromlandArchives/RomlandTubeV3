@@ -13,6 +13,6 @@ exports.createForgotPassword = (emailIN) => {
 };
 
 //Creates user from Model & inputs
-exports.getForgotPassword = (id) => {
-  return ForgotPassword.find({ _id: ObjectID(id) });
+exports.getForgotPassword = async (id) => {
+  return await ForgotPassword.find({ _id: ObjectID(id) });
 };
