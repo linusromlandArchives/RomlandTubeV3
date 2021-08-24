@@ -54,7 +54,7 @@ export default {
       request.onreadystatechange = function() {
         if (request.status == 200) {
           document.getElementById("infoText").innerText =
-            "Check your email to reset password!";
+            "Check your email to reset password!\nLink is valid for 30 minutes";
         }
       };
     },
