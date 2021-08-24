@@ -46,6 +46,11 @@ exports.findUserWithID = async (Model, toFind) => {
   return await Model.findOne({ _id: toFind });
 };
 
+//Finds all users with specified ID
+exports.findUserWithEMail = async (toFind) => {
+  return await User.findOne({ email: toFind });
+};
+
 //takes input with type Model. Saves that model in Database. Cant be used before cnctDB.
 exports.saveToDB = (input) => {
   email.sendVerificationEmail(input);
@@ -55,4 +60,9 @@ exports.saveToDB = (input) => {
 //sets verified to true (email is verifed)
 exports.verifyUser = async (Model, id) => {
   await Model.updateOne({ _id: ObjectID(id) }, { $set: { verfied: true } });
+};
+
+//sets verified to true (email is verifed)
+exports.updatePassword = async (id, password) => {
+  await User.updateOne({ _id: ObjectID(id) }, { $set: { password: password } });
 };

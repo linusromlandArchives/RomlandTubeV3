@@ -1,7 +1,11 @@
 <template>
   <main class="d-flex align-items-center justify-content-center flex-column">
     <a href="/" class="col-12 col-sm-6 col-md-3 mx-auto">
-      <img src="assets/logo-white_transparent.png" width="100%" alt="RomlandTube Logo" />
+      <img
+        src="assets/logo-white_transparent.png"
+        width="100%"
+        alt="RomlandTube Logo"
+      />
     </a>
     <div class="container col-md-4 col-sm-8 p-3">
       <b-form @submit="onSubmit" class="element w-75 m-auto text-center">
@@ -17,6 +21,7 @@
           type="email"
           v-model="email"
         ></b-form-input>
+        <p class="text-warning" id="infoText"></p>
         <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn"
           >Submit</b-button
         >
@@ -27,7 +32,7 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "ForgotPassword",
   components: {},
   data() {
     return {
@@ -47,7 +52,10 @@ export default {
       request.send(`email=${this.email}`);
       //on return recives status codes
       request.onreadystatechange = function() {
-          console.log("coolt bre")
+        if (request.status == 200) {
+          document.getElementById("infoText").innerText =
+            "Check your email to reset password!\nLink is valid for 30 minutes";
+        }
       };
     },
   },
@@ -56,7 +64,7 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/verifyAccount";
+        if (!json.verfied) window.location = "/verifyAccount";
       });
   },
 };
@@ -87,7 +95,9 @@ main {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 25px;
 }
-.col-12, .col-sm-6, .col-md-3 {
+.col-12,
+.col-sm-6,
+.col-md-3 {
   flex: 0 0 0 !important;
 }
 </style>

@@ -6,8 +6,11 @@ module.exports = (function () {
   //Local Dependencies
   const login = require("../login.js");
   const User = require("../models/User.js");
+  const forgotpassword = require("../forgotpassword");
+  const database = require("../database");
+  const email = require("../email");
 
-  router.post("/register", login.checkNotAuthenticated, async (req, res) => {
+  router.post("/register", async (req, res) => {
     try {
       //checks if the username exists in the database.
       const userExist = await login.findInDBOne(User, req.body.name);
@@ -60,10 +63,47 @@ module.exports = (function () {
     res.redirect("/");
   });
 
-  router.post("/forgotPassword", function (req, res) {
-    let email = req.body.email;
-    console.log(email);
-    res.setHeader('Content-Type', 'text/plain');
+  router.post("/forgotPassword", async function (req, res) {
+    let emailadress = req.body.email;
+    res.setHeader("Content-Type", "text/plain");
+    let forgotPasswordModel = forgotpassword.createForgotPassword(emailadress);
+    database.saveToDB(forgotPasswordModel);
+    let userModel = await login.findUserWithEMail(forgotPasswordModel.email);
+
+    email.sendResetPasswordEmail(userModel, forgotPasswordModel._id);
+
+    res.send().status(200);
+  });
+
+  router.post("/getForgotInfo", async function (req, res) {
+    let id = req.body.id;
+    res.setHeader("Content-Type", "text/plain");
+    if (id) {
+      let forgotPasswordModel = await forgotpassword.getForgotPassword(id);
+      let userModel = await login.findUserWithEMail(forgotPasswordModel[0].email);
+      console.log(userModel.name);
+      if (forgotPasswordModel) {
+        res.send(userModel.name).status(200);
+      } else {
+        res.send().status(500);
+      }
+    } else {
+      res.send().status(500);
+    }
+  });
+
+  router.post("/resetPassword", async function (req, res) {
+    res.setHeader("Content-Type", "text/plain");
+
+    let id = req.body.id;
+    let password = req.body.password;
+
+    let forgotPasswordModel = await forgotpassword.getForgotPassword(id);
+    console.log(forgotPasswordModel[0].email)
+    let userModel = await login.findUserWithEMail(forgotPasswordModel[0].email);
+    console.log(userModel);
+    //UPDATE PASSWORD
+    login.updatePassword(userModel._id, password);
     res.send().status(200);
   });
 

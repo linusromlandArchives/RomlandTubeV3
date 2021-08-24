@@ -10,6 +10,7 @@ exports.connect = (collectionname, connectURL) => {
   mongoose.connect(dbLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   });
 
   db = mongoose.connection;
