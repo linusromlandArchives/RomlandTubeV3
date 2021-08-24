@@ -75,13 +75,15 @@ module.exports = (function () {
     res.send().status(200);
   });
 
-  router.post("/getForgotInfo", function (req, res) {
+  router.post("/getForgotInfo", async function (req, res) {
     let id = req.body.id;
     res.setHeader("Content-Type", "text/plain");
     if (id) {
-      let forgotPasswordModel = forgotpassword.getForgotPassword(id);
+      let forgotPasswordModel = await forgotpassword.getForgotPassword(id);
+      let userModel = await login.findUserWithEMail(forgotPasswordModel[0].email);
+      console.log(userModel.name);
       if (forgotPasswordModel) {
-        res.send().status(200);
+        res.send(userModel.name).status(200);
       } else {
         res.send().status(500);
       }
@@ -97,7 +99,8 @@ module.exports = (function () {
     let password = req.body.password;
 
     let forgotPasswordModel = await forgotpassword.getForgotPassword(id);
-    let userModel = await login.findUserWithEMail(forgotPasswordModel.email);
+    console.log(forgotPasswordModel[0].email)
+    let userModel = await login.findUserWithEMail(forgotPasswordModel[0].email);
     console.log(userModel);
     //UPDATE PASSWORD
     login.updatePassword(userModel._id, password);

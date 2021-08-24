@@ -38,6 +38,7 @@
 </template>
 
 <script>
+let username;
 export default {
   name: "ResetPassword",
   components: {},
@@ -45,13 +46,12 @@ export default {
     return {
       password: "",
       confirmPassword: "",
-      username: "",
     };
   },
   methods: {
     onSubmit(event) {
       event.preventDefault();
-      if(this.password == this.confirmPassword){
+      if (this.password == this.confirmPassword) {
         let request = new XMLHttpRequest();
         request.open("POST", "/api/login/resetPassword", true);
         request.setRequestHeader(
@@ -59,14 +59,18 @@ export default {
           "application/x-www-form-urlencoded"
         );
         //sends request to to server
-        request.send(`id=${this.$route.query.id}&password=${this.CryptoJS.MD5(this.password + this.username)}`);
+        request.send(
+          `id=${this.$route.query.id}&password=${this.CryptoJS.MD5(
+            this.password + username
+          )}`
+        );
         //on return recives status codes
         request.onreadystatechange = function() {
-          window.location = "/login";
+           window.location = "/login";
         };
-      }else{
+      } else {
         document.getElementById("infoText").innerText =
-            "Passwords doesn't match!";
+          "Passwords doesn't match!";
       }
     },
   },
@@ -88,8 +92,10 @@ export default {
     //on return recives status codes
     request.onreadystatechange = function() {
       if (request.status == 200) {
-        this.username = request.response;
-      } else if (request.status == 500) {
+        if (!(request.response === "")) {
+          username = request.response;
+        }
+      } else {
         window.location = "/login";
       }
     };
