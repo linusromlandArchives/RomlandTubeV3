@@ -6,6 +6,11 @@ const ForgotPasswordSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  expireAt: {
+    type: Date,
+    default: Date.now,
+    expires: 1800
+  },
 });
 
 const ForgotPassword = mongoose.model("ForgotPassword", ForgotPasswordSchema);
