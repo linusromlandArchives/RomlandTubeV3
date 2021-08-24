@@ -38,17 +38,8 @@
 
             <div class="col-12 col-md-3 bg-info pt-3">
                 <div class="bg-dark">
-                    <div class="row pl-3">
                         <!-- Related video template -->
-                        <div class="media w-25 bg-danger"></div>
-                        <div class="related-info w-75 py-1">
-                            <p class="related-title m-0 col-12 text-cap"
-                                title="The Tesla Model S Plaid Is the World’s Fastest (and Coolest) Sedan">The Tesla
-                                Model S Plaid Is the World’s Fastest (and Coolest) Sedan</p>
-                            <a class="related-channel m-0 col-12 text-muted" href="">Channel</a>
-                            <p class="related-views m-0 col-12 text-muted">Views</p>
-                        </div>
-                    </div>
+                        <VideoCard class="col-12"/>
                 </div>
             </div>
         </div>
@@ -59,11 +50,13 @@
 <script>
     import Navbar from "../components/Navbar.vue";
     import Footer from "../components/Footer.vue";
+    import VideoCard from "../components/VideoCard.vue";
     export default {
         name: "Video",
         components: {
             Navbar,
             Footer,
+            VideoCard,
         },
     };
 </script>
