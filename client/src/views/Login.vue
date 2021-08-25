@@ -1,7 +1,11 @@
 <template>
   <main class="d-flex align-items-center justify-content-center flex-column">
     <a href="/" class="col-12 col-sm-6 col-md-3 mx-auto">
-      <img src="assets/logo-white_transparent.png" width="100%" alt="RomlandTube Logo" />
+      <img
+        src="assets/logo-white_transparent.png"
+        width="100%"
+        alt="RomlandTube Logo"
+      />
     </a>
     <div class="container col-md-4 col-sm-8 p-3">
       <b-form @submit="onSubmit" class="element w-75 m-auto text-center">
@@ -26,7 +30,9 @@
           <a class="text-light" href="/register"><u>Register</u></a>
         </p>
         <p>
-          <a class="text-light" href="/forgotpassword"><u>Forgot password?</u></a>
+          <a class="text-light" href="/forgotpassword"
+            ><u>Forgot password?</u></a
+          >
         </p>
         <b-button type="submit" class="m-2 w-50 x-rounded" id="loginBtn"
           >Login</b-button
@@ -37,6 +43,8 @@
 </template>
 
 <script>
+import checkAuth from "../checkAuth.js";
+
 export default {
   name: "Login",
   components: {},
@@ -77,12 +85,7 @@ export default {
     },
   },
   created() {
-    fetch("/api/getUser")
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/verifyemail";
-      });
+    checkAuth.notLoggedIn(this.$router);
   },
 };
 </script>
@@ -112,7 +115,9 @@ main {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 25px;
 }
-.col-12, .col-sm-6, .col-md-3 {
+.col-12,
+.col-sm-6,
+.col-md-3 {
   flex: 0 0 0 !important;
 }
 </style>

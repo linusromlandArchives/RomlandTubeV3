@@ -14,7 +14,7 @@
         <h1 class="mb-3 text-light">Verified Account</h1>
         <p class="mb-3 text-light">Your account is now verified!</p>
         <p class="mb-3 text-light">
-          Click <a class="mb-3 text-light" href="/"><u>me</u></a> to go home!
+          Click <a class="mb-3 text-light" href="/login"><u>me</u></a> to login!
         </p>
       </div>
     </div>
@@ -22,16 +22,13 @@
 </template>
 
 <script>
+import checkAuth from "../checkAuth.js";
+
 export default {
   name: "VerifiedAccount",
   components: {},
   created() {
-    fetch("/api/getUser")
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/verifyemail";
-      });
+    checkAuth.notLoggedIn(this.$router);
   },
 };
 </script>

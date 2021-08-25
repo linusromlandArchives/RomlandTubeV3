@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import checkAuth from "../checkAuth.js";
+
 export default {
   name: "ForgotPassword",
   components: {},
@@ -59,13 +61,8 @@ export default {
       };
     },
   },
-  mounted() {
-    fetch("/api/getUser")
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.verfied) window.location = "/";
-        if (!json.verfied) window.location = "/verifyAccount";
-      });
+  created() {
+    checkAuth.notLoggedIn(this.$router);
   },
 };
 </script>

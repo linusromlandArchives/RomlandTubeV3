@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import checkAuth from "../checkAuth.js";
+
 let username;
 export default {
   name: "ResetPassword",
@@ -66,7 +68,7 @@ export default {
         );
         //on return recives status codes
         request.onreadystatechange = function() {
-           window.location = "/login";
+          window.location = "/login";
         };
       } else {
         document.getElementById("infoText").innerText =
@@ -74,13 +76,9 @@ export default {
       }
     },
   },
-  mounted() {
-    fetch("/api/getUser")
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.verfied) window.location = "/";
-        if (!json.verfied) window.location = "/verifyAccount";
-      });
+  created() {
+    checkAuth.notLoggedIn(this.$router);
+
     let request = new XMLHttpRequest();
     request.open("POST", "/api/login/getForgotInfo", true);
     request.setRequestHeader(

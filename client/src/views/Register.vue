@@ -1,7 +1,11 @@
 <template>
   <main class="d-flex align-items-center justify-content-center flex-column">
     <a href="/" class="col-12 col-sm-6 col-md-3 mx-auto">
-      <img src="assets/logo-white_transparent.png" width="100%" alt="RomlandTube Logo" />
+      <img
+        src="assets/logo-white_transparent.png"
+        width="100%"
+        alt="RomlandTube Logo"
+      />
     </a>
     <div class="container col-md-4 col-sm-8 p-3">
       <b-form @submit="onSubmit" class="element w-75 m-auto text-center">
@@ -57,6 +61,8 @@
 </template>
 
 <script>
+import checkAuth from "../checkAuth.js";
+
 export default {
   name: "Login",
   components: {},
@@ -110,7 +116,7 @@ export default {
       request.send(`name=${name}&email=${email}&password=${pass}`);
       //on return recives status codes
       request.onreadystatechange = function() {
-        console.log(request)
+        console.log(request);
         if (request.status == 409) {
           errorBox.innerText = "Username taken!";
         } else if (request.status == 410) {
@@ -127,12 +133,7 @@ export default {
     },
   },
   created() {
-    fetch("/api/getUser")
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.verfied) window.location = "/";
-        if(!json.verfied) window.location = "/verifyemail";
-      });
+    checkAuth.notLoggedIn(this.$router);
   },
 };
 </script>
@@ -162,7 +163,9 @@ main {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 25px;
 }
-.col-12, .col-sm-6, .col-md-3 {
+.col-12,
+.col-sm-6,
+.col-md-3 {
   flex: 0 0 0 !important;
 }
 </style>

@@ -9,6 +9,8 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import Footer from "../components/Footer.vue";
+import checkAuth from "../checkAuth.js";
+
 export default {
   name: "Profile",
   components: {
@@ -16,12 +18,7 @@ export default {
     Footer,
   },
   created() {
-    fetch("/api/getUser")
-      .then((response) => response.json())
-      .then((json) => {
-        if (!json) window.location = "/login";
-        if(!json.verfied) window.location = "/verifyemail";
-      });
+    checkAuth.loggedIn(this.$router);
   },
 };
 </script>
