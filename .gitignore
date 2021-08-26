@@ -1,3 +1,7 @@
+# Doesn't include uploaded files
+server/tmp/
+
+
 # Logs
 logs
 *.log
@@ -102,3 +106,4 @@ dist
 
 # TernJS port file
 .tern-port
+
