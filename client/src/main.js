@@ -1,5 +1,8 @@
 import Vue from "vue";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import {
+	BootstrapVue,
+	IconsPlugin
+} from "bootstrap-vue";
 import VueRouter from "vue-router";
 import VueCryptojs from 'vue-cryptojs'
 import VueMeta from 'vue-meta'
@@ -17,13 +20,13 @@ Vue.use(IconsPlugin);
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  routes: routes,
-  mode: "history",
+	routes: routes,
+	mode: "history",
 });
 
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  render: (h) => h(App),
+	router,
+	render: (h) => h(App),
 }).$mount("#app");

@@ -9,45 +9,44 @@ import VerifyEmail from "./views/VerifyEmail.vue";
 import ResetPassword from "./views/ResetPassword.vue";
 import Upload from "./views/Upload.vue";
 
-export default [
-  {
-    path: "/",
-    component: Home,
-  },
-  {
-    path: "/profile",
-    component: Profile,
-  },
-  {
-    path: "/login",
-    component: Login,
-  },
-  {
-    path: "/register",
-    component: Register,
-  },
-  {
-    path: "/forgotpassword",
-    component: ForgotPassword,
-  },
-  {
-    path: "/resetPassword",
-    component: ResetPassword,
-  },
-  {
-    path: "/verifiedaccount",
-    component: VerifiedAccount,
-  },
-  {
-    path: "/verifyemail",
-    component: VerifyEmail,
-  },
-  {
-    path: "/video",
-    component: Video,
-  },
-  {
-    path: "/upload",
-    component: Upload,
-  },
+export default [{
+		path: "/",
+		component: Home,
+	},
+	{
+		path: "/profile",
+		component: Profile,
+	},
+	{
+		path: "/login",
+		component: Login,
+	},
+	{
+		path: "/register",
+		component: Register,
+	},
+	{
+		path: "/forgotpassword",
+		component: ForgotPassword,
+	},
+	{
+		path: "/resetPassword",
+		component: ResetPassword,
+	},
+	{
+		path: "/verifiedaccount",
+		component: VerifiedAccount,
+	},
+	{
+		path: "/verifyemail",
+		component: VerifyEmail,
+	},
+	{
+		path: "/video",
+		component: Video,
+	},
+	{
+		path: "/upload",
+		component: Upload,
+	},
 ];
