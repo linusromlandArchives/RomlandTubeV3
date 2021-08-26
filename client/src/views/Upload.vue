@@ -3,7 +3,7 @@
 		<Navbar />
 		<div class="d-flex justify-content-center align-items-center flex-column">
 			<h1>Upload a video</h1>
-			<b-form class="col-md-4" @submit="upload">
+			<b-form class="col-md-4" @submit="uploadData">
 				<!-- video input -->
 				<b-form-group>
 					<template v-slot:label>
@@ -152,7 +152,7 @@
 				xhr.open("POST", "/api/upload/video");
 				xhr.send(formData);
 			},
-			upload(event) {
+			uploadData(event) {
 				event.preventDefault();
 				if (this.video && this.title) {
 
