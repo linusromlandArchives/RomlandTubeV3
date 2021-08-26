@@ -30,6 +30,11 @@ export default {
   created() {
     checkAuth.notLoggedIn(this.$router);
   },
+  metaInfo() {
+    return {
+      title: "Verified Account - RomlandTube",
+    };
+  },
 };
 </script>
 

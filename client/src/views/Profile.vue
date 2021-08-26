@@ -20,6 +20,11 @@ export default {
   created() {
     checkAuth.loggedIn(this.$router);
   },
+  metaInfo() {
+    return {
+      title: "Profile - RomlandTube",
+    };
+  },
 };
 </script>
 

@@ -98,6 +98,11 @@ export default {
       }
     };
   },
+  metaInfo() {
+    return {
+      title: "Reset Password - RomlandTube",
+    };
+  },
 };
 </script>
 

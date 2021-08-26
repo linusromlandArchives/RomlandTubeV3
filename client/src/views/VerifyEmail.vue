@@ -13,9 +13,9 @@
       >
         <h1 class="mb-3 text-light">Welcome {{ data.name }}!</h1>
         <p class="mb-3 text-light">
-          You need to activate your account before you can use your account!<br />An email
-          have been sent to <i>{{ data.email }}</i>.<br />Please click the link in the
-          email to verify!
+          You need to activate your account before you can use your account!<br />An
+          email have been sent to <i>{{ data.email }}</i
+          >.<br />Please click the link in the email to verify!
         </p>
         <p class="mb-3 text-light">
           Click <a class="mb-3 text-light" href="/"><u>me</u></a> to go home!
@@ -35,14 +35,18 @@ export default {
     };
   },
   created() {
-    fetch("/api/getUser")
-      .then(async (response) => {
-        console.log(response);
-        if(response.redirected) window.location = "/login"
-        this.data = await response.json();
-        console.log(this.data.email)
-        if (this.data.verfied) window.location = "/";
-      });
+    fetch("/api/getUser").then(async (response) => {
+      console.log(response);
+      if (response.redirected) window.location = "/login";
+      this.data = await response.json();
+      console.log(this.data.email);
+      if (this.data.verfied) window.location = "/";
+    });
+  },
+  metaInfo() {
+    return {
+      title: "Verify Account - RomlandTube",
+    };
   },
 };
 </script>

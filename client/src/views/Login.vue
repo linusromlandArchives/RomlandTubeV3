@@ -87,6 +87,11 @@ export default {
   created() {
     checkAuth.notLoggedIn(this.$router);
   },
+  metaInfo() {
+    return {
+      title: "Login - RomlandTube",
+    };
+  },
 };
 </script>
 

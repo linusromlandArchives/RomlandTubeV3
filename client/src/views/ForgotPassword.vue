@@ -64,6 +64,11 @@ export default {
   created() {
     checkAuth.notLoggedIn(this.$router);
   },
+  metaInfo() {
+    return {
+      title: "Forgot Password - RomlandTube",
+    };
+  },
 };
 </script>
 

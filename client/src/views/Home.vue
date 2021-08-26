@@ -15,6 +15,11 @@ export default {
     Navbar,
     Footer,
   },
+  metaInfo() {
+    return {
+      title: "RomlandTube",
+    };
+  },
 };
 </script>
 
