@@ -81,7 +81,6 @@ module.exports = (function () {
     if (id) {
       let forgotPasswordModel = await forgotpassword.getForgotPassword(id);
       let userModel = await login.findUserWithEMail(forgotPasswordModel[0].email);
-      console.log(userModel.name);
       if (forgotPasswordModel) {
         res.send(userModel.name).status(200);
       } else {
@@ -99,9 +98,7 @@ module.exports = (function () {
     let password = req.body.password;
 
     let forgotPasswordModel = await forgotpassword.getForgotPassword(id);
-    console.log(forgotPasswordModel[0].email)
     let userModel = await login.findUserWithEMail(forgotPasswordModel[0].email);
-    console.log(userModel);
     //UPDATE PASSWORD
     login.updatePassword(userModel._id, password);
     res.send().status(200);
