@@ -21,6 +21,10 @@ const VideoSchema = new mongoose.Schema({
     channel: {
         type: String,
     },
+    userID: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now

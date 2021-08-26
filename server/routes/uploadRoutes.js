@@ -20,8 +20,10 @@ module.exports = (function () {
         res.send().status(200)
     })
 
-    router.get('/createVideo', login.checkAuthenticated, function (req, res) {
-        let videoModel = upload.createVideoModel();
+    router.get('/createVideo', login.checkAuthenticated, async function (req, res) {
+        let user = await req.user;
+        console.log(user._id)
+        let videoModel = upload.createVideoModel(user._id);
         database.saveToDB(videoModel)
         console.log(videoModel)
         res.send(videoModel._id.toString()).status(200)

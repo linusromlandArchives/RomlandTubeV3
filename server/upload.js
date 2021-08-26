@@ -7,9 +7,8 @@ const Video = require("./models/Video.js");
 
 
 //Creates user from Model & inputs
-exports.createVideoModel = () => {
-	return new Video();
+exports.createVideoModel = (userID) => {
+    return new Video({
+        userID: userID
+    });
 };
-
-
-
