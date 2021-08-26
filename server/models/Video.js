@@ -8,8 +8,13 @@ const VideoSchema = new mongoose.Schema({
     desc: {
         type: String,
     },
-    link: {
-        type: String,
+    uploaded: {
+        type: Boolean,
+        default: false
+    },
+    visable: {
+        type: Boolean,
+        default: false
     },
     thumbnail: {
         type: String,
