@@ -12,11 +12,11 @@
 					<b-form-file v-model="video" :state="Boolean(video)" ref="video-input"
 						placeholder="Choose a video or drop it here..." drop-placeholder="Drop video here..."
 						@input="onSubmitVideo()" accept="video/mp4" :disabled="showProgress" required></b-form-file>
-						<template v-if="showProgress">
-							<b-progress :max="maxProgress" class="mt-2">
-								<b-progress-bar variant="primary" :value="currentProgress"></b-progress-bar>
-							</b-progress>
-						</template>
+					<template v-if="showProgress">
+						<b-progress :max="maxProgress" class="mt-2">
+							<b-progress-bar variant="primary" :value="currentProgress"></b-progress-bar>
+						</b-progress>
+					</template>
 					<template v-slot:invalid-feedback>
 						{{ videoFileError }}
 					</template>
@@ -114,11 +114,10 @@
 					this.clearFileInput("thumbnail");
 				} else {
 					this.setErrorMessage("thumbnail", "");
-					this.uploadThumbnail();
 				}
 			},
 			setErrorMessage(file, errorMessage) {
-				switch(file) {
+				switch (file) {
 					case "video":
 						this.videoFileError = errorMessage;
 						break;
@@ -128,10 +127,10 @@
 					default:
 						console.log("Invalid function input")
 						break;
-				} 
+				}
 			},
 			clearFileInput(file) {
-				switch(file) {
+				switch (file) {
 					case "video":
 						this.title = "";
 						this.$refs["video-input"].reset();
@@ -169,12 +168,15 @@
 					let xhr = new XMLHttpRequest();
 
 					formData.append("title", this.title);
+					formData.append("mongoID", this.mongoID);
 					if (this.description) formData.append("description", this.description);
 					if (this.thumbnail) formData.append("thumbnail", this.thumbnail);
 
 					//runs when return from server
 					xhr.onreadystatechange = function () {
-						console.log(this.status)
+						if (this.readyState == 4) {
+							alert("video may be uploaded you dum dum")
+						}
 					};
 
 					//opens and send post request to server
@@ -183,7 +185,7 @@
 
 				}
 			},
-			displayProgress(){
+			displayProgress() {
 				this.showProgress = true;
 				//todo
 			},

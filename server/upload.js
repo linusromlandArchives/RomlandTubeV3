@@ -27,6 +27,23 @@ exports.updateVideo = async (id, userID) => {
     })
 }
 
+exports.updateData = async (id, userID, title, description) => {
+    await Video.updateOne({
+        $and: [{
+            _id: ObjectID(id)
+        }, {
+            userID: userID
+        }]
+    }, {
+        $set: {
+            visible: true,
+            title: title,
+            desc: description
+
+        }
+    })
+}
+
 exports.findWithID = async (id) => {
     return await Video.findOne({
         _id: ObjectID(id)

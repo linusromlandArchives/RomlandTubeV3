@@ -8,16 +8,18 @@ module.exports = (function () {
     const upload = require("../upload");
     const database = require("../database");
 
-    router.post('/data', login.checkAuthenticated, function (req, res) {
-        console.log(req.body)
-        console.log(req.files)
+    router.post('/data', login.checkAuthenticated, async function (req, res) {
+        let user = await req.user;
+        let fileModel = await upload.findWithID(req.body.mongoID)
+        await req.files.thumbnail.mv("./uploaded/thumbnails/" + fileModel._id); //Moves file from tmp to server
+        await upload.updateData(req.body.mongoID, user._id, req.body.title, req.body.description)
         res.send().status(200)
     })
 
     router.post('/video', login.checkAuthenticated, async function (req, res) {
         let user = await req.user;
         let fileModel = await upload.findWithID(req.body.mongoID)
-        await req.files.video.mv("./uploaded/" + fileModel._id); //Moves file from tmp to server
+        await req.files.video.mv("./uploaded/videos/" + fileModel._id); //Moves file from tmp to server
         await upload.updateVideo(req.body.mongoID, user._id)
         res.send().status(200)
     })

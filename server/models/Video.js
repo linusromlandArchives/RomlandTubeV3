@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 //Creates the VideoSchema and exports it
 const VideoSchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
     },
     desc: {
@@ -12,12 +12,9 @@ const VideoSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    visable: {
+    visible: {
         type: Boolean,
         default: false
-    },
-    thumbnail: {
-        type: String,
     },
     views: {
         type: Number,
