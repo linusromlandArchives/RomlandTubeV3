@@ -11,7 +11,12 @@
 					</template>
 					<b-form-file v-model="video" :state="Boolean(video)" ref="video-input"
 						placeholder="Choose a video or drop it here..." drop-placeholder="Drop video here..."
-						@input="onSubmitVideo()" accept="video/mp4" required></b-form-file>
+						@input="onSubmitVideo()" accept="video/mp4" :disabled="showProgress" required></b-form-file>
+						<template v-if="showProgress">
+							<b-progress :max="maxProgress" class="mt-2">
+								<b-progress-bar variant="primary" :value="currentProgress"></b-progress-bar>
+							</b-progress>
+						</template>
 					<template v-slot:invalid-feedback>
 						{{ videoFileError }}
 					</template>
@@ -71,6 +76,9 @@
 				videoFileError: "",
 				thumbnailFileError: "",
 				mongoID: null,
+				showProgress: false,
+				currentProgress: 0,
+				maxProgress: 100,
 			};
 		},
 		created() {
@@ -151,6 +159,7 @@
 				//opens and send post request to server
 				xhr.open("POST", "/api/upload/video");
 				xhr.send(formData);
+				this.displayProgress();
 			},
 			uploadData(event) {
 				event.preventDefault();
@@ -173,6 +182,10 @@
 					xhr.send(formData);
 
 				}
+			},
+			displayProgress(){
+				this.showProgress = true;
+				//todo
 			},
 		},
 		metaInfo() {
