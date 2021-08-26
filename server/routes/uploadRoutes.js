@@ -14,18 +14,18 @@ module.exports = (function () {
         res.send().status(200)
     })
 
-    router.post('/video', login.checkAuthenticated, function (req, res) {
-        console.log(req.body)
-        console.log(req.files)
+    router.post('/video', login.checkAuthenticated, async function (req, res) {
+        let user = await req.user;
+        let fileModel = await upload.findWithID(req.body.mongoID)
+        await req.files.video.mv("./uploaded/" + fileModel._id); //Moves file from tmp to server
+        await upload.updateVideo(req.body.mongoID, user._id)
         res.send().status(200)
     })
 
     router.get('/createVideo', login.checkAuthenticated, async function (req, res) {
         let user = await req.user;
-        console.log(user._id)
         let videoModel = upload.createVideoModel(user._id);
         database.saveToDB(videoModel)
-        console.log(videoModel)
         res.send(videoModel._id.toString()).status(200)
     })
 

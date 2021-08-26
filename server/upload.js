@@ -12,3 +12,23 @@ exports.createVideoModel = (userID) => {
         userID: userID
     });
 };
+
+exports.updateVideo = async (id, userID) => {
+    await Video.updateOne({
+        $and: [{
+            _id: ObjectID(id)
+        }, {
+            userID: userID
+        }]
+    }, {
+        $set: {
+            uploaded: true
+        }
+    })
+}
+
+exports.findWithID = async (id) => {
+    return await Video.findOne({
+        _id: ObjectID(id)
+    })
+}
