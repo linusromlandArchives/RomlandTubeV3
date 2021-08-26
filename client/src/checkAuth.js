@@ -4,7 +4,7 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (json.verfied) router.push("/");
-        if (!response.json().verfied) router.push("/verifyemail");
+        if (!json.verfied) router.push("/verifyemail");
       });
   },
   loggedIn(router) {
