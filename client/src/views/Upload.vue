@@ -12,9 +12,9 @@
 					<b-form-file v-model="video" :state="Boolean(video)" ref="video-input"
 						placeholder="Choose a video or drop it here..." drop-placeholder="Drop video here..."
 						@input="onSubmitVideo()" accept="video/mp4" required></b-form-file>
-					<b-form-invalid-feedback>
+					<template v-slot:invalid-feedback>
 						{{ videoFileError }}
-					</b-form-invalid-feedback>
+					</template>
 				</b-form-group>
 				<!-- title input -->
 				<b-form-group>
@@ -38,7 +38,7 @@
 					</template>
 					<b-form-file v-model="thumbnail" :state="Boolean(thumbnail)" ref="thumbnail-input"
 						placeholder="Choose a image or drop it here..." drop-placeholder="Drop image here..."
-						@input="uploadThumbnail()" accept=".jpg, .jpeg, .png, .webp"></b-form-file>
+						@input="onSubmitThumbnail()" accept=".jpg, .jpeg, .png, .webp"></b-form-file>
 					<template v-slot:invalid-feedback>
 						{{ thumbnailFileError }}
 					</template>
@@ -79,9 +79,11 @@
 		methods: {
 			onSubmitVideo() {
 				if (this.video.name.split(".").pop() != "mp4") {
-					this.clearVideo("Only videos of the type MP4 is allowed!");
+					this.setErrorMessage("video", "Only videos of the type MP4 is allowed!");
+					this.clearFileInput("video");
 				} else if (this.video.size > 1024 * 1024 * 512) {
-					this.clearVideo("Max file size for videos is 512MB!");
+					this.setErrorMessage("video", "Max file size for videos is 512MB!");
+					this.clearFileInput("video");
 				} else {
 					this.videoFileError = "";
 					this.title = this.video.name
@@ -95,6 +97,43 @@
 							this.mongoID = text;
 							this.uploadVideo()
 						});
+				}
+			},
+			onSubmitThumbnail() {
+				let acceptedFileExtensions = ["jpg", "jpeg", "png", "webp"];
+				if (!acceptedFileExtensions.includes(this.thumbnail.name.split(".").pop())) {
+					this.setErrorMessage("thumbnail", "Only images of the types jpg, png & webp is allowed!");
+					this.clearFileInput("thumbnail");
+				} else {
+					this.setErrorMessage("thumbnail", "");
+					this.uploadThumbnail();
+				}
+			},
+			setErrorMessage(file, errorMessage) {
+				switch(file) {
+					case "video":
+						this.videoFileError = errorMessage;
+						break;
+					case "thumbnail":
+						this.thumbnailFileError = errorMessage;
+						break;
+					default:
+						console.log("Invalid function input")
+						break;
+				} 
+			},
+			clearFileInput(file) {
+				switch(file) {
+					case "video":
+						this.title = "";
+						this.$refs["video-input"].reset();
+						break;
+					case "thumbnail":
+						this.$refs["thumbnail-input"].reset();
+						break;
+					default:
+						console.log("Invalid function input")
+						break;
 				}
 			},
 			uploadVideo() {
@@ -112,22 +151,6 @@
 				//opens and send post request to server
 				xhr.open("POST", "/api/upload/video");
 				xhr.send(formData);
-			},
-			clearVideo(errorMessage) {
-				this.videoFileError = errorMessage;
-				this.title = "";
-				this.$refs["video-input"].reset();
-
-			},
-			uploadThumbnail() {
-				let acceptedFileExtensions = ["jpg", "jpeg", "png", "webp"];
-				if (!acceptedFileExtensions.includes(this.thumbnail.name.split(".").pop())) {
-					this.thumbnailFileError = "Only images of the types jpg, png & webp is allowed!";
-					this.$refs["thumbnail-input"].reset();
-				} else {
-					this.thumbnailFileError = "";
-					//UPLOAD THUMBNAIL
-				}
 			},
 			upload(event) {
 				event.preventDefault();
