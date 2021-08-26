@@ -1,18 +1,36 @@
 export default {
 	notLoggedIn(router) {
-		fetch("/api/getUser")
-			.then((response) => response.json())
-			.then((json) => {
+		let xhr = new XMLHttpRequest();
+		//runs when return from server
+		xhr.onreadystatechange = function () {
+			if (this.readyState == 4) {
+				let json = JSON.parse(this.responseText);
 				if (json.verfied) router.push("/");
 				if (!json.verfied) router.push("/verifyemail");
-			});
+			}
+		};
+
+		//opens and send post request to server
+		xhr.open("GET", "/api/getUser");
+		xhr.send();
 	},
 	loggedIn(router) {
-		fetch("/api/getUser")
-			.then((response) => response.json())
-			.then((json) => {
-				if (!json) router.push("/login");
-				if (!json.verfied) router.push("/verifyemail");
-			});
+		let xhr = new XMLHttpRequest();
+		//runs when return from server
+		xhr.onreadystatechange = function () {
+			if (this.readyState == 4) {
+				try {
+					let json = JSON.parse(this.responseText);
+					if (!json.verfied) router.push("/verifyemail");
+				} catch (err) {
+					router.push("/login");
+				}
+			}
+		};
+
+		//opens and send post request to server
+		xhr.open("GET", "/api/getUser");
+		xhr.send();
+
 	},
 };
