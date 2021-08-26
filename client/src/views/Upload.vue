@@ -33,7 +33,7 @@
 					<template v-slot:label>
 						Description
 					</template>
-					<b-form-textarea id="textarea" v-model="description" placeholder="Enter something..." rows="5"
+					<b-form-textarea id="textarea" v-model="description" placeholder="Write something..." rows="5"
 						max-rows="10"></b-form-textarea>
 				</b-form-group>
 				<!-- thumbnail input -->
