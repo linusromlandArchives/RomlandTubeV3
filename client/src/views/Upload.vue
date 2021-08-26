@@ -12,7 +12,7 @@ import Footer from "../components/Footer.vue";
 import checkAuth from "../checkAuth.js";
 
 export default {
-  name: "Profile",
+  name: "Upload",
   components: {
     Navbar,
     Footer,
