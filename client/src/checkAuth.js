@@ -4,13 +4,15 @@ export default {
       .then((response) => response.json())
       .then((json) => {
         if (json.verfied) router.push("/");
-        if (!response.json().verfied) router.push("/verifyemail");
+        if (!json.verfied) router.push("/verifyemail");
       });
   },
   loggedIn(router) {
-    fetch("/api/getUser").then((response) => {
-      if (!response.json()) router.push("/login");
-      if (!response.json().verfied) router.push("/verifyemail");
-    });
+    fetch("/api/getUser")
+      .then((response) => response.json())
+      .then((json) => {
+        if (!json) router.push("/login");
+        if (!json.verfied) router.push("/verifyemail");
+      });
   },
 };
