@@ -50,6 +50,7 @@
 				</b-form-group>
 				<!-- form submit button -->
 				<b-button type="submit" variant="primary" :disabled="(mongoID == null)">Upload</b-button>
+				<img v-show="thumbnailLink" v-bind:src="thumbnailLink" alt="Thumbnail preview">
 			</b-form>
 		</div>
 		<Footer class="mt-5" />
@@ -76,6 +77,7 @@
 				videoFileError: "",
 				thumbnailFileError: "",
 				mongoID: null,
+				thumbnailLink: null,
 				showProgress: false,
 				currentProgress: 0,
 				maxProgress: 100,
@@ -143,22 +145,56 @@
 						break;
 				}
 			},
-			uploadVideo() {
-				let formData = new FormData();
-				let xhr = new XMLHttpRequest();
+			async uploadVideo() {
+				this.thumbnailLink = await new Promise((resolve) => {
+					let formData = new FormData();
+					let xhr = new XMLHttpRequest();
+					formData.append("video", this.video);
+					formData.append("mongoID", this.mongoID);
 
-				formData.append("video", this.video);
-				formData.append("mongoID", this.mongoID);
+					//runs when return from server
+					xhr.onreadystatechange = function () {
+						if (this.readyState == 4) resolve("/api/video/getThumbnail/" + this.responseText +
+							".jpg")
+					};
 
-				//runs when return from server
-				xhr.onreadystatechange = function () {
-					console.log(this.status)
-				};
+					let data = this;
+					let t0 = performance.now();
+					let d0 = 0;
+					let speedArray = []
 
-				//opens and send post request to server
-				xhr.open("POST", "/api/upload/video");
-				xhr.send(formData);
-				this.displayProgress();
+					//runs during upload and calulates % & speed
+					xhr.upload.onprogress = function (e) {
+						var length = (e.loaded / e.total) * 100;
+						data.currentProgress = length;
+
+						let t1 = performance.now() - t0
+						let d1 = e.loaded - d0
+
+						let timeLeft = data.msToTime((e.total - e.loaded) / (d1 / t1))
+						let speed = (d1 / t1) * 0.001
+
+						if (speedArray.length >= 20) speedArray.shift()
+						speedArray.push(speed)
+
+						const sum = speedArray.reduce((a, b) => a + b, 0);
+						const avg = (sum / speedArray.length) || 0;
+						
+						console.log(avg)
+
+						console.log(timeLeft, speed)
+
+						t0 = performance.now();
+						d0 = e.loaded;
+					};
+
+
+					//opens and send post request to server
+					xhr.open("POST", "/api/upload/video");
+					xhr.send(formData);
+					this.displayProgress();
+
+				})
 			},
 			uploadData(event) {
 				event.preventDefault();
@@ -187,7 +223,18 @@
 			},
 			displayProgress() {
 				this.showProgress = true;
-				//todo
+			},
+			msToTime(duration) {
+				var milliseconds = Math.floor((duration % 1000) / 100),
+					seconds = Math.floor((duration / 1000) % 60),
+					minutes = Math.floor((duration / (1000 * 60)) % 60),
+					hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+				hours = (hours < 10) ? "0" + hours : hours;
+				minutes = (minutes < 10) ? "0" + minutes : minutes;
+				seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+				return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 			},
 		},
 		metaInfo() {
