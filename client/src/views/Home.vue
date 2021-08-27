@@ -4,7 +4,9 @@
 		<h1>Home</h1>
 		<div v-if="videos">
 			<div v-for="video in videos" :key="video.title">
-				<a v-bind:href="'/video?id=' + video._id">{{ video.title }}</a>
+				<a v-bind:href="'/video?id=' + video._id" class="text-decoration-none text-dark">
+					<VideoCard class="col-2" :video="video" />
+				</a>
 			</div>
 		</div>
 		<Footer />
@@ -14,11 +16,14 @@
 <script>
 	import Navbar from "../components/Navbar.vue";
 	import Footer from "../components/Footer.vue";
+	import VideoCard from "../components/VideoCard.vue";
+
 	export default {
 		name: "Home",
 		components: {
 			Navbar,
 			Footer,
+			VideoCard
 		},
 		data() {
 			return {

@@ -1,9 +1,9 @@
 <template>
 	<div class="component-style p-2">
-		<div class="media w-100 bg-danger"></div>
+		<img class="media w-100" alt="thumbnail" :src="'/api/video/getThumbnail/' + video._id + '.jpg'">
 		<h1 class="video-title m-0" v-bind:title="video.title">{{video.title}}</h1>
-		<p class="video-info m-0">{{video.username}}</p>
-		<p class="video-info m-0">{{video.views}}</p>
+		<p class="video-info m-0">{{video.user}}</p>
+		<p class="video-info m-0">{{video.views}} views</p>
 	</div>
 </template>
 
@@ -14,13 +14,11 @@
 			return {
 				c_bgc: "#fff",
 				c_width: "",
-				video: {
-					title: "Title",
-					username: "Username",
-					views: "Views"
-				}
 			};
 		},
+		props: {
+			video: Object,
+		}
 	};
 </script>
 

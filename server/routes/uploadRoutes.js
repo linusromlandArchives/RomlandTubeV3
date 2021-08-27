@@ -23,7 +23,7 @@ module.exports = (function () {
             sharp(buffer).toFile("./uploaded/thumbnails/" + fileModel._id + ".jpg");
         }
         let thumbnailName = req.files && req.files.thumbnail ? req.files.thumbnail.name : ""
-        await upload.updateData(req.body.mongoID, user._id, req.body.title, req.body.description, thumbnailName)
+        await upload.updateData(req.body.mongoID, user._id, req.body.title, req.body.description, thumbnailName, user.name)
         res.send().status(200)
     })
 

@@ -29,7 +29,7 @@ exports.updateVideo = async (id, userID, originalVideoFileName) => {
     })
 }
 
-exports.updateData = async (id, userID, title, description, originalThumbnailFileName) => {
+exports.updateData = async (id, userID, title, description, originalThumbnailFileName, user) => {
     await Video.updateOne({
         $and: [{
             _id: ObjectID(id)
@@ -41,7 +41,8 @@ exports.updateData = async (id, userID, title, description, originalThumbnailFil
             visible: true,
             title: title,
             desc: description,
-            originalThumbnailFileName: originalThumbnailFileName
+            originalThumbnailFileName: originalThumbnailFileName,
+            user: user
 
         }
 
