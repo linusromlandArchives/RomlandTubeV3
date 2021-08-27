@@ -11,3 +11,7 @@ exports.findAll = async () => {
 exports.findOne = async (id) => {
     return await Video.findOne({_id: ObjectID(id)})
 }
+
+exports.updateViews = async (id) => {
+    await Video.updateOne({ _id: ObjectID(id) }, { $inc: { views: 1 } });
+}

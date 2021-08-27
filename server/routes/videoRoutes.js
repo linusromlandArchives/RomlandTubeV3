@@ -21,9 +21,10 @@ module.exports = (function () {
 		}
 	})
 
-	router.get('/getVideo/:id', (req, res) => {
+	router.get('/getVideo/:id', async (req, res) => {
 		res.setHeader('content-type', 'video/mp4');
 		if (req.params.id && fs.existsSync(resolve("uploaded/videos/" + req.params.id + ".mp4"))) {
+			await video.updateViews(req.params.id)
 			res.sendFile(resolve("uploaded/videos/" + req.params.id + ".mp4"))
 		} else {
 			res.sendStatus(404)
