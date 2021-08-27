@@ -88,6 +88,9 @@ app.use("/api/login/", require("./routes/loginRoutes"));
 //adds the uploadRoutes to /
 app.use("/api/upload/", require("./routes/uploadRoutes"));
 
+//adds the uploadRoutes to /
+app.use("/api/video/", require("./routes/videoRoutes"));
+
 //adds the apiRoutes to /
 app.use("/api", require("./routes/apiRoutes"));
 
