@@ -2,11 +2,11 @@
 	<main>
 		<Navbar />
 		<h1>Home</h1>
-		<ul v-if="videos">
-			<li v-for="video in videos" :key="video.title">
-				{{ video.title }}
-			</li>
-		</ul>
+		<div v-if="videos">
+			<div v-for="video in videos" :key="video.title">
+				<a v-bind:href="'/video?id=' + video._id">{{ video.title }}</a>
+			</div>
+		</div>
 		<Footer />
 	</main>
 </template>

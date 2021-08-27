@@ -21,5 +21,24 @@ module.exports = (function () {
 		}
 	})
 
+	router.get('/getVideo/:id', (req, res) => {
+		res.setHeader('content-type', 'video/mp4');
+		if (req.params.id && fs.existsSync(resolve("uploaded/videos/" + req.params.id + ".mp4"))) {
+			res.sendFile(resolve("uploaded/videos/" + req.params.id + ".mp4"))
+		} else {
+			res.sendStatus(404)
+		}
+	})
+
+	router.get('/getVideoData/:id', async (req, res) => {
+		if (req.params.id) {
+			let videoModel = await video.findOne(req.params.id)
+			res.json(videoModel)
+		} else {
+			res.sendStatus(404)
+
+		}
+	})
+
 	return router;
 })();

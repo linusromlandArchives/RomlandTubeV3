@@ -6,5 +6,8 @@ const ObjectID = require('mongodb').ObjectId;
 const Video = require("./models/Video.js");
 
 exports.findAll = async () => {
-    return await Video.find()
+    return await Video.find({uploaded: true, visible: true})
+}
+exports.findOne = async (id) => {
+    return await Video.findOne({_id: ObjectID(id)})
 }

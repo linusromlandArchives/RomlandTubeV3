@@ -3,15 +3,16 @@
 		<Navbar />
 		<div class="row col-11 mx-auto p-0">
 			<div class="col-12 col-md-9 bg-info pt-3">
-				<div class="media col-12 bg-dark">
-					Video
-				</div>
+				<video v-if="video._id" controls class="media col-12 bg-dark">
+					<source :src="'/api/video/getVideo/' + video._id" type="video/mp4">
+					Your browser does not support the video tag
+				</video>
 				<div id="main" class="mt-3">
 					<p class="h4">
-						Revealing my Widebody C8 Corvette!!
+						{{video.title}}
 					</p>
 					<p class="text-muted">
-						146 128 visningar
+						{{video.views}} views
 					</p>
 				</div>
 				<div id="description">
@@ -25,10 +26,7 @@
 					<div class="video-info my-3">
 						<p>21 aug. 2021</p>
 						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-							praesentium hic doloribus quisquam aperiam, laboriosam saepe iste
-							atque maxime ut eius consequuntur ipsum perspiciatis cum provident
-							a nostrum eum officiis!
+							{{video.desc}}
 						</p>
 					</div>
 				</div>
@@ -58,6 +56,16 @@
 			Navbar,
 			Footer,
 			VideoCard,
+		},
+		data() {
+			return {
+				video: ""
+			}
+		},
+		async beforeCreate() {
+			let id = this.$route.query.id
+			let req = await this.axios.get('/api/video/getVideoData/' + id);
+			this.video = req.data;
 		},
 		metaInfo() {
 			return {
