@@ -27,42 +27,49 @@
 						{{ videoFileError }}
 					</template>
 				</b-form-group>
-				<!-- title input -->
-				<b-form-group>
-					<template v-slot:label>
-						Title <span class="text-danger">*</span>
-					</template>
-					<b-form-input v-model="title" placeholder="Title" required></b-form-input>
-				</b-form-group>
-				<!-- description input -->
-				<b-form-group>
-					<template v-slot:label>
-						Description
-					</template>
-					<b-form-textarea id="textarea" v-model="description" placeholder="Write something..." rows="5"
-						max-rows="10"></b-form-textarea>
-				</b-form-group>
-				<!-- thumbnail input -->
-				<b-form-group>
-					<template v-slot:label>
-						Thumbnail
-					</template>
-					<b-form-file v-model="thumbnail" :state="Boolean(thumbnail)" ref="thumbnail-input"
-						placeholder="Choose a image or drop it here..." drop-placeholder="Drop image here..."
-						@input="onSubmitThumbnail()" accept=".jpg, .jpeg, .png, .webp"></b-form-file>
-					<template v-slot:invalid-feedback>
-						{{ thumbnailFileError }}
-					</template>
-				</b-form-group>
-				<b-form-group v-show="thumbnailLink">
-					<template v-slot:label>
-						Thumbnail Preview
-					</template>
-					<img class="col-12" v-bind:src="thumbnailLink" alt="Thumbnail preview">
-				</b-form-group>
+				<div v-show="!videoReady">
+					<!-- title input -->
+					<b-form-group>
+						<template v-slot:label>
+							Title <span class="text-danger">*</span>
+						</template>
+						<b-form-input v-model="title" placeholder="Title" required></b-form-input>
+					</b-form-group>
+					<!-- description input -->
+					<b-form-group>
+						<template v-slot:label>
+							Description
+						</template>
+						<b-form-textarea id="textarea" v-model="description" placeholder="Write something..." rows="5"
+							max-rows="10"></b-form-textarea>
+					</b-form-group>
+					<!-- thumbnail input -->
+					<b-form-group>
+						<template v-slot:label>
+							Thumbnail
+						</template>
+						<b-form-file v-model="thumbnail" :state="Boolean(thumbnail)" ref="thumbnail-input"
+							placeholder="Choose a image or drop it here..." drop-placeholder="Drop image here..."
+							@input="onSubmitThumbnail()" accept=".jpg, .jpeg, .png, .webp"></b-form-file>
+						<template v-slot:invalid-feedback>
+							{{ thumbnailFileError }}
+						</template>
+					</b-form-group>
+					<!-- thumbnail preview -->
+					<b-form-group v-show="thumbnailLink">
+						<template v-slot:label>
+							Thumbnail Preview
+						</template>
+						<img class="col-12" v-bind:src="thumbnailLink" alt="Thumbnail preview">
+					</b-form-group>
 
-				<!-- form submit button -->
-				<b-button type="submit" variant="primary" :disabled="(mongoID == null)">Upload</b-button>
+					<!-- form submit button -->
+					<b-overlay :show="submitDisabled" rounded opacity="0.6" spinner-small spinner-variant="primary"
+						class="d-inline-block">
+						<b-button type="submit" variant="primary" :disabled="(mongoID == null || submitDisabled)">Upload
+						</b-button>
+					</b-overlay>
+				</div>
 			</b-form>
 		</div>
 		<Footer class="mt-5" />
@@ -93,9 +100,11 @@
 				showProgress: false,
 				showRemaining: false,
 				currentProgress: 0,
+				submitDisabled: false,
 				maxProgress: 100,
 				timeLeftOnUpload: "",
 				currentSpeedOnUpload: "",
+				videoReady: false,
 			};
 		},
 		created() {
@@ -173,8 +182,11 @@
 				//runs when return from server
 				xhr.onreadystatechange = function () {
 					if (this.readyState == 4) {
-						if(!data.thumbnailLink)data.thumbnailLink = "/api/video/getThumbnail/" + this.responseText + ".jpg"
+						if (data.videoReady) alert("uploaded bro")
+						if (!data.thumbnailLink) data.thumbnailLink = "/api/video/getThumbnail/" + this
+							.responseText + ".jpg"
 						data.showRemaining = false;
+
 					}
 				};
 
@@ -218,9 +230,10 @@
 			uploadData(event) {
 				event.preventDefault();
 				if (this.video && this.title) {
-
+					this.submitDisabled = true
 					let formData = new FormData();
 					let xhr = new XMLHttpRequest();
+					let data = this;
 
 					formData.append("title", this.title);
 					formData.append("mongoID", this.mongoID);
@@ -229,8 +242,13 @@
 
 					//runs when return from server
 					xhr.onreadystatechange = function () {
+						console.log(this.readyState)
 						if (this.readyState == 4) {
-							alert("video may be uploaded you dum dum")
+							if (data.currentProgress == 100) {
+								alert("uploaded bro")
+							} else {
+								data.videoReady = true
+							}
 						}
 					};
 
