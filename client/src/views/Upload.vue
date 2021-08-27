@@ -182,7 +182,7 @@
 				//runs when return from server
 				xhr.onreadystatechange = function () {
 					if (this.readyState == 4) {
-						if (data.videoReady) alert("uploaded bro")
+						if (data.videoReady) data.redirectOnComplete()
 						if (!data.thumbnailLink) data.thumbnailLink = "/api/video/getThumbnail/" + this
 							.responseText + ".jpg"
 						data.showRemaining = false;
@@ -245,7 +245,7 @@
 						console.log(this.readyState)
 						if (this.readyState == 4) {
 							if (data.currentProgress == 100) {
-								alert("uploaded bro")
+								data.redirectOnComplete()
 							} else {
 								data.videoReady = true
 							}
@@ -279,6 +279,9 @@
 
 				return output;
 			},
+			redirectOnComplete() {
+				alert("Uploaded video successfully!")
+			}
 		},
 		metaInfo() {
 			return {
