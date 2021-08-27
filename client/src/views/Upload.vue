@@ -16,6 +16,9 @@
 						<b-progress :max="maxProgress" class="mt-2">
 							<b-progress-bar variant="primary" :value="currentProgress"></b-progress-bar>
 						</b-progress>
+						<p>{{timeLeftOnUpload}}</p>
+						<p>{{currentSpeedOnUpload}}</p>
+
 					</template>
 					<template v-slot:invalid-feedback>
 						{{ videoFileError }}
@@ -87,6 +90,8 @@
 				showProgress: false,
 				currentProgress: 0,
 				maxProgress: 100,
+				timeLeftOnUpload: "",
+				currentSpeedOnUpload: "",
 			};
 		},
 		created() {
@@ -178,7 +183,6 @@
 						let t1 = performance.now() - t0
 						let d1 = e.loaded - d0
 
-						let timeLeft = data.msToTime((e.total - e.loaded) / (d1 / t1))
 						let speed = (d1 / t1) * 0.001
 
 						if (speedArray.length >= 20) speedArray.shift()
@@ -187,9 +191,10 @@
 						const sum = speedArray.reduce((a, b) => a + b, 0);
 						const avg = (sum / speedArray.length) || 0;
 
-						console.log(avg)
+						let timeLeft = data.msToTime((e.total - e.loaded) / (avg / 0.001))
 
-						console.log(timeLeft, speed)
+						data.currentSpeedOnUpload = (avg / 8).toFixed(2) + " MB/s"
+						data.timeLeftOnUpload = timeLeft
 
 						t0 = performance.now();
 						d0 = e.loaded;
@@ -232,8 +237,7 @@
 				this.showProgress = true;
 			},
 			msToTime(duration) {
-				var milliseconds = Math.floor((duration % 1000) / 100),
-					seconds = Math.floor((duration / 1000) % 60),
+				let seconds = Math.floor((duration / 1000) % 60),
 					minutes = Math.floor((duration / (1000 * 60)) % 60),
 					hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 
@@ -241,7 +245,11 @@
 				minutes = (minutes < 10) ? "0" + minutes : minutes;
 				seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-				return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+				let output = seconds + "s"
+				if (minutes > 0) output = minutes + "m " + output
+				if (hours > 0) output = hours + "h " + output
+
+				return output;
 			},
 		},
 		metaInfo() {
