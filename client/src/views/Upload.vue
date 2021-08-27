@@ -48,9 +48,15 @@
 						{{ thumbnailFileError }}
 					</template>
 				</b-form-group>
+				<b-form-group v-show="thumbnailLink">
+					<template v-slot:label>
+						Thumbnail Preview
+					</template>
+					<img class="col-12" v-bind:src="thumbnailLink" alt="Thumbnail preview">
+				</b-form-group>
+
 				<!-- form submit button -->
 				<b-button type="submit" variant="primary" :disabled="(mongoID == null)">Upload</b-button>
-				<img v-show="thumbnailLink" v-bind:src="thumbnailLink" alt="Thumbnail preview">
 			</b-form>
 		</div>
 		<Footer class="mt-5" />
@@ -117,6 +123,7 @@
 				} else {
 					this.setErrorMessage("thumbnail", "");
 				}
+				this.thumbnailLink = window.URL.createObjectURL(this.thumbnail)
 			},
 			setErrorMessage(file, errorMessage) {
 				switch (file) {
@@ -179,7 +186,7 @@
 
 						const sum = speedArray.reduce((a, b) => a + b, 0);
 						const avg = (sum / speedArray.length) || 0;
-						
+
 						console.log(avg)
 
 						console.log(timeLeft, speed)
