@@ -131,8 +131,8 @@
 					this.clearFileInput("thumbnail");
 				} else {
 					this.setErrorMessage("thumbnail", "");
+					this.thumbnailLink = window.URL.createObjectURL(this.thumbnail)
 				}
-				this.thumbnailLink = window.URL.createObjectURL(this.thumbnail)
 			},
 			setErrorMessage(file, errorMessage) {
 				switch (file) {
@@ -173,7 +173,7 @@
 				//runs when return from server
 				xhr.onreadystatechange = function () {
 					if (this.readyState == 4) {
-						data.thumbnailLink = "/api/video/getThumbnail/" + this.responseText + ".jpg"
+						if(!data.thumbnailLink)data.thumbnailLink = "/api/video/getThumbnail/" + this.responseText + ".jpg"
 						data.showRemaining = false;
 					}
 				};
