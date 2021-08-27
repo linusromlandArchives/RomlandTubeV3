@@ -64,8 +64,6 @@ app.use(
 			fileSize: fileSizeLimitMB
 		}, //limit of 50mb i think
 		abortOnLimit: true, //send 413 when file to large
-		useTempFiles: true, //stores files while uploading in ./tmp instead of memory
-		tempFileDir: "./tmp/",
 		uploadTimeout: 0, //disable timeout while testing
 		debug: false, //debug logs
 	})
