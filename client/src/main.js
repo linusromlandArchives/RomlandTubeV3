@@ -6,6 +6,8 @@ import {
 import VueRouter from "vue-router";
 import VueCryptojs from 'vue-cryptojs'
 import VueMeta from 'vue-meta'
+import axios from 'axios'
+import VueAxios from 'vue-axios' 
 import routes from "./routes"
 import App from "./App.vue";
 
@@ -18,6 +20,7 @@ Vue.use(VueCryptojs)
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueRouter);
+Vue.use(VueAxios, axios)
 
 const router = new VueRouter({
 	routes: routes,

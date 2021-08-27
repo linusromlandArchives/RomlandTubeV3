@@ -62,7 +62,6 @@
 						document.getElementById("errorArea").innerText =
 							"Username or Password is incorrect";
 					} else {
-						console.log("success");
 						window.location = "/api/login/auth";
 					}
 				};

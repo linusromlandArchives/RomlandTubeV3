@@ -30,22 +30,10 @@
 				title: "RomlandTube",
 			};
 		},
-		created() {
-			let xhr = new XMLHttpRequest();
-			//runs when return from server
-			xhr.onreadystatechange = function () {
-				if (this.readyState == 4) {
-					let json = JSON.parse(this.responseText);
-					this.videos = json;
-					console.log(this.videos)
-				}
-			};
-
-			//opens and send post request to server
-			xhr.open("GET", "/api/video/getVideos");
-			xhr.send();
-
-		}
+		async beforeCreate() {
+			let req = await this.axios.get('/api/video/getVideos');
+			this.videos = req.data
+		},
 	};
 </script>
 
