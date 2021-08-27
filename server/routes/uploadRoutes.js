@@ -11,8 +11,13 @@ module.exports = (function () {
     router.post('/data', login.checkAuthenticated, async function (req, res) {
         let user = await req.user;
         let fileModel = await upload.findWithID(req.body.mongoID)
-        await req.files.thumbnail.mv("./uploaded/thumbnails/" + fileModel._id); //Moves file from tmp to server
-        await upload.updateData(req.body.mongoID, user._id, req.body.title, req.body.description)
+        if (req.files.thumbnail) {
+            // Process thumbnail to set size. 
+            await req.files.thumbnail.mv("./uploaded/thumbnails/" + fileModel._id); //Moves file from tmp to server
+        } else {
+            // Generate thumbnail from random frame
+      }
+        await upload.updateData(req.body.mongoID, user._id, req.body.title, req.body.description, req.files.thumbnail.name)
         res.send().status(200)
     })
 
@@ -20,7 +25,7 @@ module.exports = (function () {
         let user = await req.user;
         let fileModel = await upload.findWithID(req.body.mongoID)
         await req.files.video.mv("./uploaded/videos/" + fileModel._id); //Moves file from tmp to server
-        await upload.updateVideo(req.body.mongoID, user._id)
+        await upload.updateVideo(req.body.mongoID, user._id, req.files.video.name)
         res.send().status(200)
     })
 

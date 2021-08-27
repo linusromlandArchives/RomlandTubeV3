@@ -13,7 +13,7 @@ exports.createVideoModel = (userID) => {
     });
 };
 
-exports.updateVideo = async (id, userID) => {
+exports.updateVideo = async (id, userID, originalVideoFileName) => {
     await Video.updateOne({
         $and: [{
             _id: ObjectID(id)
@@ -22,12 +22,14 @@ exports.updateVideo = async (id, userID) => {
         }]
     }, {
         $set: {
-            uploaded: true
+            uploaded: true,
+            originalVideoFileName: originalVideoFileName
+
         }
     })
 }
 
-exports.updateData = async (id, userID, title, description) => {
+exports.updateData = async (id, userID, title, description, originalThumbnailFileName) => {
     await Video.updateOne({
         $and: [{
             _id: ObjectID(id)
@@ -38,9 +40,11 @@ exports.updateData = async (id, userID, title, description) => {
         $set: {
             visible: true,
             title: title,
-            desc: description
+            desc: description,
+            originalThumbnailFileName: originalThumbnailFileName
 
         }
+
     })
 }
 

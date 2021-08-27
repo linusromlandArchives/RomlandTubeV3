@@ -9,7 +9,6 @@ module.exports = (function () {
 	router.get("/getUser", login.checkAuthenticated, async (req, res) => {
 		let user = await req.user;
 		let data = user ? user : {loggedIn: false}
-		console.log(data)
 		res.json(data);
 	});
 

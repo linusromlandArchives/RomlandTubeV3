@@ -86,7 +86,7 @@
 				request.send(`name=${name}&email=${email}&password=${pass}`);
 				//on return recives status codes
 				request.onreadystatechange = function () {
-					console.log(request);
+					(request);
 					if (request.status == 409) {
 						errorBox.innerText = "Username taken!";
 					} else if (request.status == 410) {
