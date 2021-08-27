@@ -60,7 +60,7 @@
 						<template v-slot:label>
 							Thumbnail Preview
 						</template>
-						<img class="col-12" v-bind:src="thumbnailLink" alt="Thumbnail preview">
+						<img class="col-12 border border-secondary rounded p-0" v-bind:src="thumbnailLink" alt="Thumbnail preview">
 					</b-form-group>
 
 					<!-- form submit button -->
