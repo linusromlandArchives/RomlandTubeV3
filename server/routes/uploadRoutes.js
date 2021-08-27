@@ -6,6 +6,9 @@ module.exports = (function () {
     const sharp = require("sharp");
     const resolve = require('path').resolve;
     const fs = require('fs');
+    const {
+        getVideoDurationInSeconds
+    } = require('get-video-duration')
 
     //Local Dependencies
     const login = require("../login.js");
@@ -30,11 +33,12 @@ module.exports = (function () {
         res.setHeader('Content-Type', 'plain/text')
         await req.files.video.mv("./uploaded/videos/" + fileModel._id + ".mp4"); //Moves file from tmp to server
         if (!fs.existsSync(resolve("uploaded/thumbnails/" + fileModel._id + "jpg"))) {
+            let videoLength = (await getVideoDurationInSeconds("./uploaded/videos/" + fileModel._id + ".mp4")) * 1000
             // Generate thumbnail from random frame
             await extractFrame({
                 input: "./uploaded/videos/" + fileModel._id + ".mp4",
                 output: "./uploaded/thumbnails/" + fileModel._id + ".jpg",
-                offset: 1000,
+                offset: Math.floor(Math.random() * videoLength),
                 quality: 8,
             })
         }
