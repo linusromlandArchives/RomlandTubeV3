@@ -1,7 +1,9 @@
 # Doesn't include uploaded files
 server/tmp/
-server/uploaded/*
-!server/uploaded/.gitkeep
+server/uploaded/videos/*
+!server/uploaded/videos/.gitkeep
+server/uploaded/thumbnails/*
+!server/uploaded/thumbnails/.gitkeep
 
 
 # Logs
