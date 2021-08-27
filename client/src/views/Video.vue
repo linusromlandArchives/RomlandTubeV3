@@ -78,6 +78,7 @@
 <style scoped>
 	.media {
 		aspect-ratio: 16 / 9;
+		padding: 0 !important;
 	}
 
 	.video-info {
