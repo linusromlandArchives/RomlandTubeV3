@@ -14,11 +14,14 @@
 						@input="onSubmitVideo()" accept="video/mp4" :disabled="showProgress" required></b-form-file>
 					<template v-if="showProgress">
 						<b-progress :max="maxProgress" class="mt-2">
-							<b-progress-bar variant="primary" :value="currentProgress"></b-progress-bar>
+							<b-progress-bar variant="primary" :value="currentProgress">
+								<span v-show="currentProgress == 100">Video uploaded!</span>
+							</b-progress-bar>
 						</b-progress>
-						<p>{{timeLeftOnUpload}}</p>
-						<p>{{currentSpeedOnUpload}}</p>
-
+						<div v-if="showRemaining">
+							<p>{{timeLeftOnUpload}}</p>
+							<p>{{currentSpeedOnUpload}}</p>
+						</div>
 					</template>
 					<template v-slot:invalid-feedback>
 						{{ videoFileError }}
@@ -88,6 +91,7 @@
 				mongoID: null,
 				thumbnailLink: null,
 				showProgress: false,
+				showRemaining: false,
 				currentProgress: 0,
 				maxProgress: 100,
 				timeLeftOnUpload: "",
@@ -158,55 +162,58 @@
 				}
 			},
 			async uploadVideo() {
-				this.thumbnailLink = await new Promise((resolve) => {
-					let formData = new FormData();
-					let xhr = new XMLHttpRequest();
-					formData.append("video", this.video);
-					formData.append("mongoID", this.mongoID);
 
-					//runs when return from server
-					xhr.onreadystatechange = function () {
-						if (this.readyState == 4) resolve("/api/video/getThumbnail/" + this.responseText +
-							".jpg")
-					};
+				let formData = new FormData();
+				let xhr = new XMLHttpRequest();
+				formData.append("video", this.video);
+				formData.append("mongoID", this.mongoID);
 
-					let data = this;
-					let t0 = performance.now();
-					let d0 = 0;
-					let speedArray = []
+				let data = this
 
-					//runs during upload and calulates % & speed
-					xhr.upload.onprogress = function (e) {
-						var length = (e.loaded / e.total) * 100;
-						data.currentProgress = length;
+				//runs when return from server
+				xhr.onreadystatechange = function () {
+					if (this.readyState == 4) {
+						data.thumbnailLink = "/api/video/getThumbnail/" + this.responseText + ".jpg"
+						data.showRemaining = false;
+					}
+				};
 
-						let t1 = performance.now() - t0
-						let d1 = e.loaded - d0
+				let t0 = performance.now();
+				let d0 = 0;
+				let speedArray = []
 
-						let speed = (d1 / t1) * 0.001
+				//runs during upload and calulates % & speed
+				xhr.upload.onprogress = function (e) {
+					var length = (e.loaded / e.total) * 100;
+					data.currentProgress = length;
 
-						if (speedArray.length >= 20) speedArray.shift()
-						speedArray.push(speed)
+					let t1 = performance.now() - t0
+					let d1 = e.loaded - d0
 
-						const sum = speedArray.reduce((a, b) => a + b, 0);
-						const avg = (sum / speedArray.length) || 0;
+					let speed = (d1 / t1) * 0.001
 
-						let timeLeft = data.msToTime((e.total - e.loaded) / (avg / 0.001))
+					if (speedArray.length >= 20) speedArray.shift()
+					speedArray.push(speed)
 
-						data.currentSpeedOnUpload = (avg / 8).toFixed(2) + " MB/s"
-						data.timeLeftOnUpload = timeLeft
+					const sum = speedArray.reduce((a, b) => a + b, 0);
+					const avg = (sum / speedArray.length) || 0;
 
-						t0 = performance.now();
-						d0 = e.loaded;
-					};
+					let timeLeft = data.msToTime((e.total - e.loaded) / (avg / 0.001))
+
+					data.currentSpeedOnUpload = (avg / 8).toFixed(2) + " MB/s"
+					data.timeLeftOnUpload = timeLeft
+
+					t0 = performance.now();
+					d0 = e.loaded;
+				};
 
 
-					//opens and send post request to server
-					xhr.open("POST", "/api/upload/video");
-					xhr.send(formData);
-					this.displayProgress();
+				//opens and send post request to server
+				xhr.open("POST", "/api/upload/video");
+				xhr.send(formData);
+				this.displayProgress();
 
-				})
+
 			},
 			uploadData(event) {
 				event.preventDefault();
@@ -235,6 +242,9 @@
 			},
 			displayProgress() {
 				this.showProgress = true;
+				setTimeout(() => {
+					if (this.currentProgress != 100) this.showRemaining = true
+				}, 2000);
 			},
 			msToTime(duration) {
 				let seconds = Math.floor((duration / 1000) % 60),
