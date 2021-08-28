@@ -4,7 +4,6 @@ module.exports = (function () {
 	const router = express.Router();
 	const fs = require("fs");
 	const resolve = require('path').resolve;
-	const sharp = require("sharp");
 
 	//Local Dependencies
 	const video = require("../video.js");
@@ -14,27 +13,9 @@ module.exports = (function () {
 	});
 
 	router.get('/getThumbnail/:id', (req, res) => {
-		res.setHeader('content-type', 'image/webp');
+		res.setHeader('content-type', 'image/jpeg');
 		if (req.params.id && fs.existsSync(resolve("uploaded/thumbnails/" + req.params.id))) {
-
-			sharp(resolve("uploaded/thumbnails/" + req.params.id))
-				.rotate()
-				.resize(
-					Math.min(281 * 2, 500 * 2),
-					//Math.round(Math.min(parseInt(req.query.size), width) * (9 / 16))
-				)
-				.webp()
-				.toBuffer()
-				.then((data) => {
-					res.write(data, "binary");
-					res.end(null, "binary");
-				})
-				.catch((error) => {
-					res.write(error.toString());
-					res.end();
-				});
-
-			//res.sendFile(resolve("uploaded/thumbnails/" + req.params.id))
+			res.sendFile(resolve("uploaded/thumbnails/" + req.params.id))
 		} else {
 			res.sendStatus(404)
 		}
