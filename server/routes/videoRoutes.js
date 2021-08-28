@@ -4,6 +4,7 @@ module.exports = (function () {
 	const router = express.Router();
 	const fs = require("fs");
 	const resolve = require('path').resolve;
+	const sharp = require("sharp");
 
 	//Local Dependencies
 	const video = require("../video.js");
