@@ -1,7 +1,7 @@
 <template>
 	<main>
 		<Navbar />
-		<h1>Home</h1>
+		<input type="search" placeholder="Search">
 		<div v-if="videos">
 			<div v-for="video in videos" :key="video.title">
 				<a v-bind:href="'/video?id=' + video._id" class="text-decoration-none text-dark">

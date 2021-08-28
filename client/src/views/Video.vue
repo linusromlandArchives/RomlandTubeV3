@@ -3,10 +3,11 @@
 		<Navbar />
 		<div class="row col-11 mx-auto p-0">
 			<div class="col-12 col-md-9 bg-info pt-3">
-				<video v-if="video._id" controls class="media col-12 bg-dark">
+				<video v-if="video._id" id="player" controls class="media col-12 bg-dark">
 					<source :src="'/api/video/getVideo/' + video._id" type="video/mp4">
 					Your browser does not support the video tag
 				</video>
+
 				<div id="main" class="mt-3">
 					<p class="h4">
 						{{video.title}}
@@ -50,6 +51,9 @@
 	import Navbar from "../components/Navbar.vue";
 	import Footer from "../components/Footer.vue";
 	import VideoCard from "../components/VideoCard.vue";
+	import Plyr from 'plyr';
+	new Plyr('#player');
+
 	export default {
 		name: "Video",
 		components: {
@@ -76,6 +80,8 @@
 </script>
 
 <style scoped>
+	@import 'https://cdn.plyr.io/3.6.8/plyr.css';
+
 	.media {
 		aspect-ratio: 16 / 9;
 		padding: 0 !important;
