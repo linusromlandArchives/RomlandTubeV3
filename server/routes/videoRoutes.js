@@ -75,8 +75,8 @@ module.exports = (function () {
 
 	function resizeImage(imagePath, size) {
 		return new Promise(function (resolve, reject) {
-			let width = 500 * 2
-			let height = 281 * 2
+			let width = 500
+			let height = 281
 
 			sharp(imagePath)
 				.rotate()
@@ -84,7 +84,7 @@ module.exports = (function () {
 					width, height,
 					Math.round(Math.min(parseInt(size), width) * (9 / 16))
 				)
-				.webp({ quality: 80 })
+				.webp({ quality: 30 })
 				.toBuffer()
 				.then((data) => {
 					resolve(data);
