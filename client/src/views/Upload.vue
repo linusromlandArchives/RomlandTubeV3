@@ -184,7 +184,7 @@
 					if (this.readyState == 4) {
 						if (data.videoReady) data.redirectOnComplete()
 						if (!data.thumbnailLink) data.thumbnailLink = "/api/video/getThumbnail/" + this
-							.responseText + ".jpg"
+							.responseText
 						data.showRemaining = false;
 
 					}
