@@ -23,7 +23,7 @@ module.exports = (function () {
 					Math.min(281 * 2, 500 * 2),
 					//Math.round(Math.min(parseInt(req.query.size), width) * (9 / 16))
 				)
-				.webp()
+				.webp({ quality: 80 })
 				.toBuffer()
 				.then((data) => {
 					res.write(data, "binary");
