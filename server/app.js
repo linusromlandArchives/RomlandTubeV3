@@ -12,6 +12,7 @@ const passport = require("passport");
 const MongoStore = require("connect-mongo");
 const fileUpload = require("express-fileupload");
 const history = require("connect-history-api-fallback");
+const sharp = require("sharp");
 
 //Local Dependencies
 const database = require("./database.js");
@@ -56,6 +57,9 @@ initializePassport(
 	(name) => User.find((user) => user.name === name),
 	(id) => User.find((user) => user.id === id)
 );
+
+//init of sharp
+sharp.cache(false);
 
 //init of express-fileupload
 app.use(

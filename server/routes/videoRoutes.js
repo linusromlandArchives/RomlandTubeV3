@@ -13,9 +13,37 @@ module.exports = (function () {
 	});
 
 	router.get('/getThumbnail/:id', (req, res) => {
-		res.setHeader('content-type', 'image/jpeg');
-		if (req.params.id && fs.existsSync(resolve("uploaded/thumbnails/" + req.params.id))) {
-			res.sendFile(resolve("uploaded/thumbnails/" + req.params.id))
+		res.setHeader('content-type', 'image/webp');
+
+		let filename;
+
+		fs.readdirSync(resolve("uploaded/thumbnails/")).forEach(element => {
+			if (element.includes(req.params.id)) filename = element
+		});
+
+		if (filename && fs.existsSync(resolve("uploaded/thumbnails/" + filename))) {
+
+			let width = 500 * 2
+			let height = 281 * 2
+
+			sharp(resolve("uploaded/thumbnails/" + filename))
+				.rotate()
+				.resize(
+					width, height,
+					Math.round(Math.min(parseInt(req.query.size), width) * (9 / 16))
+				)
+				.webp({ quality: 80 })
+				.toBuffer()
+				.then((data) => {
+					res.write(data, "binary");
+					res.end(null, "binary");
+				})
+				.catch((error) => {
+					res.write(error.toString());
+					res.end();
+				});
+
+			//res.sendFile(resolve("uploaded/thumbnails/" + req.params.id))
 		} else {
 			res.sendStatus(404)
 		}

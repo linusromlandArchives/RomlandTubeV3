@@ -5,6 +5,7 @@ module.exports = (function () {
     const extractFrame = require('ffmpeg-extract-frame')
     const sharp = require("sharp");
     const resolve = require('path').resolve;
+    const extname = require('path').extname;
     const fs = require('fs');
     const {
         getVideoDurationInSeconds
@@ -19,8 +20,17 @@ module.exports = (function () {
         let user = await req.user;
         let fileModel = await upload.findWithID(req.body.mongoID)
         if (req.files && req.files.thumbnail) {
-            let buffer = await req.files.thumbnail.data
-            sharp(buffer).toFile("./uploaded/thumbnails/" + fileModel._id + ".jpg");
+            /*let buffer = await req.files.thumbnail.data
+            sharp(buffer).toFile("./uploaded/thumbnails/" + fileModel._id + ".jpg");*/
+
+            console.log(resolve("uploaded/thumbnails/" + fileModel._id + "jpg"))
+
+            if (fs.existsSync(resolve("uploaded/thumbnails/" + fileModel._id + ".jpg"))) {
+                console.log("Removed file")
+                fs.unlinkSync(resolve("uploaded/thumbnails/" + fileModel._id + ".jpg"));
+            }
+
+            await req.files.thumbnail.mv("./uploaded/thumbnails/" + fileModel._id + extname(req.files.thumbnail.name)); //Moves file from tmp to server
         }
         let thumbnailName = req.files && req.files.thumbnail ? req.files.thumbnail.name : ""
         await upload.updateData(req.body.mongoID, user._id, req.body.title, req.body.description, thumbnailName, user.name)
