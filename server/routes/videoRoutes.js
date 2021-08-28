@@ -1,3 +1,5 @@
+const { json } = require("express");
+
 module.exports = (function () {
 	//Dependencies import
 	const express = require("express");
@@ -9,11 +11,14 @@ module.exports = (function () {
 	//Local Dependencies
 	const video = require("../video.js");
 
+	//Cache array
+	let cacheArray = []
+
 	router.get("/getVideos", async (req, res) => {
 		res.json(await video.findAll());
 	});
 
-	router.get('/getThumbnail/:id', (req, res) => {
+	router.get('/getThumbnail/:id', async (req, res) => {
 		res.setHeader('content-type', 'image/webp');
 
 		let filename;
@@ -24,26 +29,24 @@ module.exports = (function () {
 
 		if (filename && fs.existsSync(resolve("uploaded/thumbnails/" + filename))) {
 
-			let width = 500 * 2
-			let height = 281 * 2
+			let imagePath = resolve("uploaded/thumbnails/" + filename);
 
-			sharp(resolve("uploaded/thumbnails/" + filename))
-				.rotate()
-				.resize(
-					width, height,
-					Math.round(Math.min(parseInt(req.query.size), width) * (9 / 16))
-				)
-				.webp({ quality: 80 })
-				.toBuffer()
-				.then((data) => {
-					res.write(data, "binary");
-					res.end(null, "binary");
-				})
-				.catch((error) => {
-					res.write(error.toString());
-					res.end();
-				});
+			let imageData;
 
+			let imagePos = includesObj(cacheArray, imagePath)
+			if (imagePos == -1) {
+				imageData = await resizeImage(imagePath, req.query.size)
+				let imageObj = {
+					imageData,
+					imagePath
+				}
+				cacheArray.push(imageObj)
+			} else {
+				imageData = cacheArray[imagePos].imageData
+			}
+
+			res.write(imageData, 'binary');
+			res.end(null, 'binary');
 			//res.sendFile(resolve("uploaded/thumbnails/" + req.params.id))
 		} else {
 			res.sendStatus(404)
@@ -69,6 +72,49 @@ module.exports = (function () {
 
 		}
 	})
+
+	function resizeImage(imagePath, size) {
+		return new Promise(function (resolve, reject) {
+			let width = 500 * 2
+			let height = 281 * 2
+
+			sharp(imagePath)
+				.rotate()
+				.resize(
+					width, height,
+					Math.round(Math.min(parseInt(size), width) * (9 / 16))
+				)
+				.webp({ quality: 80 })
+				.toBuffer()
+				.then((data) => {
+					resolve(data);
+				})
+				.catch((error) => {
+					reject(error.toString())
+				});
+
+		});
+
+	}
+
+	function includesObj(array, path) {
+		let pos = -1;
+
+		for (let index = 0; index < array.length; index++) {
+			const element = array[index];
+			if (path == element.imagePath) {
+				pos = index
+			}
+
+		}
+
+		array.forEach(element => {
+
+		});
+
+		return pos;
+	}
+
 
 	return router;
 })();
