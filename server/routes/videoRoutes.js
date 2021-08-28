@@ -15,13 +15,23 @@ module.exports = (function () {
 
 	router.get('/getThumbnail/:id', (req, res) => {
 		res.setHeader('content-type', 'image/webp');
-		if (req.params.id && fs.existsSync(resolve("uploaded/thumbnails/" + req.params.id))) {
 
-			sharp(resolve("uploaded/thumbnails/" + req.params.id))
+		let filename;
+
+		fs.readdirSync(resolve("uploaded/thumbnails/")).forEach(element => {
+			if (element.includes(req.params.id)) filename = element
+		});
+
+		if (filename && fs.existsSync(resolve("uploaded/thumbnails/" + filename))) {
+
+			let width = 500 * 2
+			let height = 281 * 2
+
+			sharp(resolve("uploaded/thumbnails/" + filename))
 				.rotate()
 				.resize(
-					Math.min(281 * 2, 500 * 2),
-					//Math.round(Math.min(parseInt(req.query.size), width) * (9 / 16))
+					width, height,
+					Math.round(Math.min(parseInt(req.query.size), width) * (9 / 16))
 				)
 				.webp({ quality: 80 })
 				.toBuffer()
