@@ -6,10 +6,10 @@ module.exports = (function () {
 	const router = express.Router();
 	const fs = require("fs");
 	const resolve = require('path').resolve;
-	const sharp = require("sharp");
 
 	//Local Dependencies
 	const video = require("../video.js");
+	const image = require("../image.js");
 
 	//Cache array
 	let cacheArray = []
@@ -33,9 +33,9 @@ module.exports = (function () {
 
 			let imageData;
 
-			let imagePos = includesObj(cacheArray, imagePath)
+			let imagePos = image.includesObj(cacheArray, imagePath)
 			if (imagePos == -1) {
-				imageData = await resizeImage(imagePath, req.query.size)
+				imageData = await image.resizeImage(imagePath, req.query.size)
 				let imageObj = {
 					imageData,
 					imagePath
@@ -72,49 +72,6 @@ module.exports = (function () {
 
 		}
 	})
-
-	function resizeImage(imagePath, size) {
-		return new Promise(function (resolve, reject) {
-			let width = 500
-			let height = 281
-
-			sharp(imagePath)
-				.rotate()
-				.resize(
-					width, height,
-					Math.round(Math.min(parseInt(size), width) * (9 / 16))
-				)
-				.webp({ quality: 30 })
-				.toBuffer()
-				.then((data) => {
-					resolve(data);
-				})
-				.catch((error) => {
-					reject(error.toString())
-				});
-
-		});
-
-	}
-
-	function includesObj(array, path) {
-		let pos = -1;
-
-		for (let index = 0; index < array.length; index++) {
-			const element = array[index];
-			if (path == element.imagePath) {
-				pos = index
-			}
-
-		}
-
-		array.forEach(element => {
-
-		});
-
-		return pos;
-	}
-
 
 	return router;
 })();
