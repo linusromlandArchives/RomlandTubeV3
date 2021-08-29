@@ -39,7 +39,9 @@
 			<div class="col-12 col-md-3 bg-info pt-3">
 				<div class="bg-dark">
 					<!-- Related video template -->
-					<VideoCard class="col-12" />
+					<a class="text-decoration-none text-dark" v-for="video in popular" :key="video._id" v-bind:href="'/video?id=' + video._id">
+						<VideoCard class="col-12" :video="video" />
+					</a>
 				</div>
 			</div>
 		</div>
@@ -63,13 +65,18 @@
 		},
 		data() {
 			return {
-				video: ""
+				video: "",
+				popular: "",
 			}
 		},
 		async beforeCreate() {
 			let id = this.$route.query.id
-			let req = await this.axios.get('/api/video/getVideoData/' + id);
-			this.video = req.data;
+			let video = await this.axios.get('/api/video/getVideoData/' + id);
+			this.video = video.data;
+
+			let popular = await this.axios.get('/api/video/getPopular');
+			this.popular = popular.data;
+			console.log(this.popular)
 		},
 		metaInfo() {
 			return {

@@ -1,4 +1,6 @@
-const { json } = require("express");
+const {
+	json
+} = require("express");
 
 module.exports = (function () {
 	//Dependencies import
@@ -16,6 +18,10 @@ module.exports = (function () {
 
 	router.get("/getVideos", async (req, res) => {
 		res.json(await video.findAll());
+	});
+
+	router.get("/getPopular", async (req, res) => {
+		res.json(await video.findPopular(3));
 	});
 
 	router.get('/getThumbnail/:id', async (req, res) => {
