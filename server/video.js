@@ -18,10 +18,11 @@ exports.findOne = async (id) => {
     })
 }
 
-exports.findPopular = async (limit) => {
+exports.findPopular = async (limit, id) => {
     return await Video.find({
         uploaded: true,
-        visible: true
+        visible: true,
+        _id: { $ne: ObjectID(id) }
     }).sort({
         views: -1
     }).limit(limit)
