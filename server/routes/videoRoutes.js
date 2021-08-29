@@ -20,8 +20,8 @@ module.exports = (function () {
 		res.json(await video.findAll());
 	});
 
-	router.get("/getPopular", async (req, res) => {
-		res.json(await video.findPopular(3));
+	router.get("/getPopular/:id", async (req, res) => {
+		res.json(await video.findPopular(3, req.params.id));
 	});
 
 	router.get('/getThumbnail/:id', async (req, res) => {

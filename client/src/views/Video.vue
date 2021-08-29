@@ -74,7 +74,7 @@
 			let video = await this.axios.get('/api/video/getVideoData/' + id);
 			this.video = video.data;
 
-			let popular = await this.axios.get('/api/video/getPopular');
+			let popular = await this.axios.get('/api/video/getPopular/' + id);
 			this.popular = popular.data;
 			console.log(this.popular)
 		},
