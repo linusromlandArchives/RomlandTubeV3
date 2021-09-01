@@ -12,7 +12,7 @@ exports.resizeImage = (imagePath, size) => {
                 width, height,
                 Math.round(Math.min(parseInt(size), width) * (9 / 16))
             )
-            .webp({ quality: 30 })
+            .webp({ quality: 80 })
             .toBuffer()
             .then((data) => {
                 resolve(data);
